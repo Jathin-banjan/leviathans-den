@@ -1,6 +1,6 @@
-// Web Audio & MP3 Audio Engine for Leviathan's Den Intro Sequence
+// Web Audio & Looping Akatsuki Theme Music Engine
 
-const INTRO_MUSIC_PATH = "/audio/leviathan-intro.mp3";
+const INTRO_MUSIC_PATH = "/audio/akatsuki-theme.mp3";
 
 class SoundEngine {
   constructor() {
@@ -9,7 +9,7 @@ class SoundEngine {
     this.isMuted = false;
     this.initialized = false;
     this.audioElement = null;
-    this.ambientNodes = [];
+    this.synthLoopInterval = null;
   }
 
   init() {
@@ -21,11 +21,11 @@ class SoundEngine {
       this.masterGain.gain.setValueAtTime(0.75, this.ctx.currentTime);
       this.masterGain.connect(this.ctx.destination);
 
-      // Configurable MP3 Audio Element
+      // Akatsuki Theme Looping MP3 Audio Element
       this.audioElement = new Audio();
       this.audioElement.src = INTRO_MUSIC_PATH;
       this.audioElement.loop = true;
-      this.audioElement.volume = 0.65;
+      this.audioElement.volume = 0.7;
 
       this.initialized = true;
     } catch (e) {
@@ -45,11 +45,11 @@ class SoundEngine {
     if (this.audioElement && !this.isMuted) {
       this.audioElement.currentTime = 0;
       this.audioElement.play().catch(() => {
-        // Fallback to synthetic Web Audio API synth if MP3 is pending or blocked
-        this.playScene1Rumble();
+        // Fallback to Akatsuki Synthetic Looper if MP3 is pending
+        this.startAkatsukiSynthLoop();
       });
     } else {
-      this.playScene1Rumble();
+      this.startAkatsukiSynthLoop();
     }
   }
 
@@ -58,6 +58,7 @@ class SoundEngine {
       this.audioElement.pause();
       this.audioElement.currentTime = 0;
     }
+    this.stopAkatsukiSynthLoop();
   }
 
   setMute(muted) {
@@ -75,51 +76,65 @@ class SoundEngine {
     return this.isMuted;
   }
 
-  // Web Audio Synth Fallbacks
-  playScene1Rumble() {
-    if (!this.ctx || this.isMuted) return;
+  // Akatsuki Theme Looper Synthesizer (Ominous Choir + Gong Pulse + Bass Drone)
+  startAkatsukiSynthLoop() {
+    if (!this.ctx || this.synthLoopInterval || this.isMuted) return;
     this.resume();
-    const t = this.ctx.currentTime;
-    const subOsc = this.ctx.createOscillator();
-    const subGain = this.ctx.createGain();
 
-    subOsc.type = 'sine';
-    subOsc.frequency.setValueAtTime(35, t);
-    subOsc.frequency.exponentialRampToValueAtTime(45, t + 3.0);
+    const triggerAkatsukiChords = () => {
+      if (this.isMuted || !this.ctx) return;
+      const t = this.ctx.currentTime;
 
-    subGain.gain.setValueAtTime(0.01, t);
-    subGain.gain.linearRampToValueAtTime(0.5, t + 1.5);
-    subGain.gain.linearRampToValueAtTime(0.3, t + 3.0);
+      // Dark Minor Chord Drone (A Minor / C Ominous Choir)
+      [110, 130.81, 164.81, 220].forEach((freq) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
 
-    subOsc.connect(subGain);
-    subGain.connect(this.masterGain);
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(freq, t);
 
-    subOsc.start(t);
-    subOsc.stop(t + 3.2);
+        gain.gain.setValueAtTime(0.01, t);
+        gain.gain.linearRampToValueAtTime(0.08, t + 1.0);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 3.8);
+
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+
+        osc.start(t);
+        osc.stop(t + 4.0);
+      });
+
+      // Japanese Taiko/Gong Sub Pulse
+      const kickOsc = this.ctx.createOscillator();
+      const kickGain = this.ctx.createGain();
+      kickOsc.type = 'sine';
+      kickOsc.frequency.setValueAtTime(80, t);
+      kickOsc.frequency.exponentialRampToValueAtTime(30, t + 0.8);
+
+      kickGain.gain.setValueAtTime(0.7, t);
+      kickGain.gain.exponentialRampToValueAtTime(0.001, t + 0.9);
+
+      kickOsc.connect(kickGain);
+      kickGain.connect(this.masterGain);
+
+      kickOsc.start(t);
+      kickOsc.stop(t + 0.95);
+    };
+
+    triggerAkatsukiChords();
+    this.synthLoopInterval = setInterval(triggerAkatsukiChords, 4000);
   }
 
-  playScene2RisingTension() {
-    if (!this.ctx || this.isMuted) return;
-    this.resume();
-    const t = this.ctx.currentTime;
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
-
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(55, t);
-    osc.frequency.exponentialRampToValueAtTime(120, t + 2.0);
-
-    gain.gain.setValueAtTime(0.1, t);
-    gain.gain.linearRampToValueAtTime(0.4, t + 1.5);
-    gain.gain.linearRampToValueAtTime(0.05, t + 2.0);
-
-    osc.connect(gain);
-    gain.connect(this.masterGain);
-
-    osc.start(t);
-    osc.stop(t + 2.1);
+  stopAkatsukiSynthLoop() {
+    if (this.synthLoopInterval) {
+      clearInterval(this.synthLoopInterval);
+      this.synthLoopInterval = null;
+    }
   }
 
+  // Cinematic SFX Triggers
+  playScene1Rumble() { this.playIntroTrack(); }
+  playScene2RisingTension() {}
   playEyeActivationSFX() {
     if (!this.ctx || this.isMuted) return;
     this.resume();
@@ -130,63 +145,19 @@ class SoundEngine {
     chimeOsc.type = 'sine';
     chimeOsc.frequency.setValueAtTime(880, t);
     chimeOsc.frequency.exponentialRampToValueAtTime(1760, t + 0.3);
-    chimeOsc.frequency.exponentialRampToValueAtTime(440, t + 1.2);
 
     chimeGain.gain.setValueAtTime(0.01, t);
-    chimeGain.gain.linearRampToValueAtTime(0.6, t + 0.1);
-    chimeGain.gain.exponentialRampToValueAtTime(0.01, t + 1.3);
+    chimeGain.gain.linearRampToValueAtTime(0.5, t + 0.1);
+    chimeGain.gain.exponentialRampToValueAtTime(0.01, t + 1.0);
 
     chimeOsc.connect(chimeGain);
     chimeGain.connect(this.masterGain);
 
     chimeOsc.start(t);
-    chimeOsc.stop(t + 1.4);
+    chimeOsc.stop(t + 1.1);
   }
-
-  playCrowWhooshSFX() {
-    if (!this.ctx || this.isMuted) return;
-    this.resume();
-    const t = this.ctx.currentTime;
-    const bufferSize = this.ctx.sampleRate * 1.2;
-    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
-
-    const noise = this.ctx.createBufferSource();
-    noise.buffer = buffer;
-    const noiseGain = this.ctx.createGain();
-
-    noiseGain.gain.setValueAtTime(0.01, t);
-    noiseGain.gain.linearRampToValueAtTime(0.3, t + 0.4);
-    noiseGain.gain.exponentialRampToValueAtTime(0.01, t + 1.2);
-
-    noise.connect(noiseGain);
-    noiseGain.connect(this.masterGain);
-
-    noise.start(t);
-    noise.stop(t + 1.2);
-  }
-
-  playTitleImpactSFX() {
-    if (!this.ctx || this.isMuted) return;
-    this.resume();
-    const t = this.ctx.currentTime;
-    const subOsc = this.ctx.createOscillator();
-    const subGain = this.ctx.createGain();
-
-    subOsc.type = 'sine';
-    subOsc.frequency.setValueAtTime(150, t);
-    subOsc.frequency.exponentialRampToValueAtTime(25, t + 1.2);
-
-    subGain.gain.setValueAtTime(0.8, t);
-    subGain.gain.exponentialRampToValueAtTime(0.001, t + 1.5);
-
-    subOsc.connect(subGain);
-    subGain.connect(this.masterGain);
-
-    subOsc.start(t);
-    subOsc.stop(t + 1.6);
-  }
+  playCrowWhooshSFX() {}
+  playTitleImpactSFX() {}
 }
 
 export const audioEngine = new SoundEngine();
