@@ -19,7 +19,7 @@ export default function VenuesSection() {
             LOCATION COMMAND CENTER
           </span>
           <h2 className="font-display font-extrabold text-3xl sm:text-5xl text-white tracking-wide uppercase mb-4">
-            EVENT VENUES
+            EVENT VENUES & FLOORS
           </h2>
           <div className="w-16 h-1 bg-crimson-600 mx-auto rounded-full" />
         </div>
@@ -29,7 +29,7 @@ export default function VenuesSection() {
           {venues.map((venue) => (
             <div
               key={venue.id}
-              className="p-8 rounded-2xl bg-stone-900/60 border border-stone-800/90 border-glow-hover flex flex-col justify-between backdrop-blur relative overflow-hidden group"
+              className="p-8 rounded-3xl bg-stone-900/60 border border-stone-800/90 border-glow-hover flex flex-col justify-between backdrop-blur relative overflow-hidden group shadow-xl"
             >
               <div className="space-y-4">
                 <div className="w-12 h-12 rounded-xl bg-crimson-950/80 border border-crimson-800/50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -37,13 +37,13 @@ export default function VenuesSection() {
                 </div>
 
                 <div>
-                  <span className="text-[10px] font-mono font-bold tracking-widest text-crimson-500 uppercase block">
+                  <span className="px-2.5 py-1 rounded bg-crimson-950 border border-crimson-800 text-crimson-400 text-[10px] font-mono font-bold tracking-widest uppercase inline-block mb-2">
                     {venue.floor}
                   </span>
                   <h3 className="font-display font-bold text-xl text-white uppercase tracking-wide">
                     {venue.name}
                   </h3>
-                  <span className="text-xs text-stone-400 block mt-1">
+                  <span className="text-xs text-stone-400 block mt-1 font-mono">
                     {venue.location}
                   </span>
                 </div>
@@ -55,12 +55,12 @@ export default function VenuesSection() {
                   </div>
                   <div className="flex items-center space-x-2">
                     <Clock className="w-3.5 h-3.5 text-crimson-500 shrink-0" />
-                    <span>{venue.timeSlot}</span>
+                    <span className="font-mono text-[11px]">{venue.timeSlot}</span>
                   </div>
                 </div>
 
-                <div className="p-3 rounded-xl bg-stone-950 border border-stone-800 text-[11px] text-stone-400 space-y-1">
-                  <span className="text-[9px] font-bold text-crimson-500 uppercase block">ASSIGNED ROUND:</span>
+                <div className="p-3.5 rounded-xl bg-stone-950 border border-stone-800 text-[11px] text-stone-400 space-y-1">
+                  <span className="text-[9px] font-bold text-crimson-500 uppercase block">ASSIGNED TRIAL:</span>
                   <p className="font-bold text-white uppercase">{venue.assignedRound}</p>
                 </div>
               </div>

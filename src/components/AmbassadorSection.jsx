@@ -28,7 +28,7 @@ export default function AmbassadorSection() {
             <div className="relative aspect-[4/5] rounded-2xl bg-stone-900 border border-crimson-900/60 overflow-hidden group shadow-2xl">
               <img 
                 src="/assets/character.jpg" 
-                alt="Leviathan Brand Ambassador"
+                alt="Brand Ambassador Dhanush G Gowda"
                 className="w-full h-full object-cover object-center filter contrast-110 brightness-95 group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80 z-10" />
@@ -45,15 +45,15 @@ export default function AmbassadorSection() {
             <div className="space-y-6">
               <div>
                 <span className="text-xs font-bold tracking-[0.25em] text-crimson-500 uppercase block mb-1">
-                  OFFICIAL EVENT ICON
+                  OFFICIAL BRAND AMBASSADOR
                 </span>
                 <h3 className="font-display font-black text-3xl sm:text-4xl text-white uppercase tracking-wide">
-                  LEVIATHAN COMMAND
+                  DHANUSH G GOWDA
                 </h3>
               </div>
 
               <p className="text-stone-300 text-sm sm:text-base leading-relaxed font-light">
-                Embodying the supreme technical mastery and dark strategic dominance of Leviathan's Den. The official Brand Ambassador icon stands as the benchmark for the flagship IT Manager event at Semaphore Fest.
+                Representing the supreme technical mastery and dark strategic dominance of Leviathan's Den. As the official Brand Ambassador for IT Manager at Semaphore Fest 2026, Dhanush G Gowda sets the benchmark for leadership excellence.
               </p>
 
               <div className="p-4 rounded-xl bg-stone-900/60 border border-stone-800 space-y-2">
@@ -62,7 +62,7 @@ export default function AmbassadorSection() {
                   <span>KEYNOTE INAUGURAL ADDRESS</span>
                 </div>
                 <p className="text-xs text-stone-400 font-mono">
-                  Main Auditorium Arena — September 17, 2026 @ 09:00 AM IST
+                  Sambhram Auditorium (Ramanujan Block) — September 17, 2026 @ 09:00 AM IST
                 </p>
               </div>
             </div>

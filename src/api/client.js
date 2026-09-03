@@ -22,7 +22,7 @@ export async function fetchRounds() {
       date: "DAY 1 — SEPTEMBER 17, 2026",
       startTime: "09:30 AM",
       endTime: "12:00 PM",
-      venueName: "Nethravathi Seminar Hall",
+      venueName: "Nethravathi Seminar Hall (4th Floor)",
       instructions: "All terminal units must be network-tested 30 minutes prior by Volunteer Team Alpha."
     },
     {
@@ -36,7 +36,7 @@ export async function fetchRounds() {
       date: "DAY 1 — SEPTEMBER 17, 2026",
       startTime: "02:00 PM",
       endTime: "04:00 PM",
-      venueName: "Nethravathi Hall",
+      venueName: "Nethravathi Hall (4th Floor)",
       instructions: "Distribute case study envelopes; invigilating volunteers ensure zero inter-candidate communication."
     },
     {
@@ -50,7 +50,7 @@ export async function fetchRounds() {
       date: "DAY 2 — SEPTEMBER 18, 2026",
       startTime: "10:00 AM",
       endTime: "12:30 PM",
-      venueName: "Nethravathi Seminar Hall",
+      venueName: "Nethravathi Seminar Hall (4th Floor)",
       instructions: "Keep hardware artifact display boxes sealed until inauguration clock begins."
     },
     {
@@ -64,7 +64,7 @@ export async function fetchRounds() {
       date: "DAY 2 — SEPTEMBER 18, 2026",
       startTime: "02:00 PM",
       endTime: "05:00 PM",
-      venueName: "Main Auditorium Arena",
+      venueName: "Sambhram Auditorium Ground Floor (Ramanujan Block)",
       instructions: "Stage podium mics and jury rubrics to be finalized by Event Commanders Jathin & Hasth."
     }
   ];
@@ -87,7 +87,7 @@ export async function fetchSchedules() {
       activity: "Aptitude Test",
       startTime: "09:30 AM",
       endTime: "12:00 PM",
-      venueName: "Nethravathi Seminar Hall",
+      venueName: "Nethravathi Seminar Hall (4th Floor)",
       instructions: "System check & candidate seating 30m before start.",
       status: "SCHEDULED"
     },
@@ -99,7 +99,7 @@ export async function fetchSchedules() {
       activity: "Case Allegation / Case Analysis",
       startTime: "02:00 PM",
       endTime: "04:00 PM",
-      venueName: "Nethravathi Hall",
+      venueName: "Nethravathi Hall (4th Floor)",
       instructions: "Distribute case envelopes; supervise evaluation.",
       status: "SCHEDULED"
     },
@@ -111,7 +111,7 @@ export async function fetchSchedules() {
       activity: "Guess the Part",
       startTime: "10:00 AM",
       endTime: "12:30 PM",
-      venueName: "Nethravathi Seminar Hall",
+      venueName: "Nethravathi Seminar Hall (4th Floor)",
       instructions: "Supervise mystery fragment hardware setup.",
       status: "SCHEDULED"
     },
@@ -123,7 +123,7 @@ export async function fetchSchedules() {
       activity: "Interview & Boardroom Defense",
       startTime: "02:00 PM",
       endTime: "05:00 PM",
-      venueName: "Main Auditorium Arena",
+      venueName: "Sambhram Auditorium Ground Floor (Ramanujan Block)",
       instructions: "Stage audio check & jury briefing.",
       status: "SCHEDULED"
     }
@@ -142,8 +142,8 @@ export async function fetchVenues() {
     {
       id: 1,
       name: "NETHRAVATHI SEMINAR HALL",
-      location: "MAIN ACADEMIC BLOCK",
-      floor: "GROUND FLOOR",
+      location: "MAIN ACADEMIC BUILDING",
+      floor: "4TH FLOOR",
       capacity: 250,
       assignedRound: "ROUND 1 (APTITUDE) & ROUND 3 (GUESS THE PART)",
       timeSlot: "DAY 1: 9:30 AM - 12:00 PM | DAY 2: 10:00 AM - 12:30 PM",
@@ -152,8 +152,8 @@ export async function fetchVenues() {
     {
       id: 2,
       name: "NETHRAVATHI HALL",
-      location: "CENTRAL COMPLEX",
-      floor: "1ST FLOOR",
+      location: "MAIN ACADEMIC BUILDING",
+      floor: "4TH FLOOR",
       capacity: 180,
       assignedRound: "ROUND 2 (CASE ALLEGATION / ANALYSIS)",
       timeSlot: "DAY 1: 02:00 PM - 04:00 PM",
@@ -161,9 +161,9 @@ export async function fetchVenues() {
     },
     {
       id: 3,
-      name: "MAIN AUDITORIUM ARENA",
-      location: "ADMINISTRATIVE BLOCK",
-      floor: "2ND FLOOR",
+      name: "SAMBHRAM AUDITORIUM",
+      location: "RAMANUJAN BLOCK",
+      floor: "GROUND FLOOR",
       capacity: 500,
       assignedRound: "ROUND 4 (INTERVIEW & BOARDROOM DEFENSE)",
       timeSlot: "DAY 2: 02:00 PM - 05:00 PM",
@@ -171,6 +171,30 @@ export async function fetchVenues() {
     }
   ];
 }
+
+// 20 Volunteer Roster transcribed from official sheet (media_1788429501131.jpg)
+export const OFFICIAL_VOLUNTEERS = [
+  { id: 1, name: "Dhanush", usn: "NN25MCA030", sec: "1 'A'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "MALE", assignedRound: "ROUND 1 (AWAKENING)", assignedVenue: "Nethravathi Seminar Hall (4th Floor)", timeSlot: "09:30 AM - 12:00 PM", duty: "Invigilation & Intranet Quiz Supervision" },
+  { id: 2, name: "Rohan Shetty", usn: "NU26MCA116", sec: "1 'B'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "MALE", assignedRound: "ROUND 1 (AWAKENING)", assignedVenue: "Nethravathi Seminar Hall (4th Floor)", timeSlot: "09:30 AM - 12:00 PM", duty: "Terminal Setup & Technical Assistance" },
+  { id: 3, name: "Raksha Shetty", usn: "NU26MCA109", sec: "1 'B'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "FEMALE", assignedRound: "ROUND 2 (VERDICT)", assignedVenue: "Nethravathi Hall (4th Floor)", timeSlot: "02:00 PM - 04:00 PM", duty: "Case File Envelope Distribution" },
+  { id: 4, name: "Sushanth Shetty", usn: "NU26MCA158", sec: "1 'C'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "MALE", assignedRound: "ROUND 2 (VERDICT)", assignedVenue: "Nethravathi Hall (4th Floor)", timeSlot: "02:00 PM - 04:00 PM", duty: "Evaluation Desk Coordination" },
+  { id: 5, name: "SHREYAS P SHETTY", usn: "NU26MCA142", sec: "1 'C'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "MALE", assignedRound: "ROUND 3 (FRAGMENTS)", assignedVenue: "Nethravathi Seminar Hall (4th Floor)", timeSlot: "10:00 AM - 12:30 PM", duty: "Mystery Hardware Artifact Supervision" },
+  { id: 6, name: "Tanushi Adappa", usn: "NU26MCA161", sec: "1 'C'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "FEMALE", assignedRound: "ROUND 3 (FRAGMENTS)", assignedVenue: "Nethravathi Seminar Hall (4th Floor)", timeSlot: "10:00 AM - 12:30 PM", duty: "Clue Interval Announcement & Distribution" },
+  { id: 7, name: "Akshatha Rai K", usn: "NN25MCA008", sec: "3 'A'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "FEMALE", assignedRound: "ROUND 4 (JUDGMENT)", assignedVenue: "Sambhram Auditorium Ground Floor (Ramanujan Block)", timeSlot: "02:00 PM - 05:00 PM", duty: "Jury Rubric & Stage Audio Coordination" },
+  { id: 8, name: "Deeksha", usn: "NN25MCA028", sec: "3 'A'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "FEMALE", assignedRound: "ROUND 4 (JUDGMENT)", assignedVenue: "Sambhram Auditorium Ground Floor (Ramanujan Block)", timeSlot: "02:00 PM - 05:00 PM", duty: "Finalist Stage Ushering & Presentation Timer" },
+  { id: 9, name: "Hruthvik N V", usn: "NN25MCA050", sec: "3 'A'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "MALE", assignedRound: "ROUND 1 (AWAKENING)", assignedVenue: "Nethravathi Seminar Hall (4th Floor)", timeSlot: "09:30 AM - 12:00 PM", duty: "Candidate Attendance & Badge Verification" },
+  { id: 10, name: "Avilash", usn: "NN25MCA020", sec: "3 'A'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "MALE", assignedRound: "ROUND 2 (VERDICT)", assignedVenue: "Nethravathi Hall (4th Floor)", timeSlot: "02:00 PM - 04:00 PM", duty: "Crisis Scenario Audio Visual Supervision" },
+  { id: 11, name: "G Anup", usn: "NN25MCA037", sec: "3 'A'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "MALE", assignedRound: "ROUND 3 (FRAGMENTS)", assignedVenue: "Nethravathi Seminar Hall (4th Floor)", timeSlot: "10:00 AM - 12:30 PM", duty: "Code Fragment Display Security" },
+  { id: 12, name: "Harshini R Shetty", usn: "NN25MCA043", sec: "3 'A'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "FEMALE", assignedRound: "ROUND 4 (JUDGMENT)", assignedVenue: "Sambhram Auditorium Ground Floor (Ramanujan Block)", timeSlot: "02:00 PM - 05:00 PM", duty: "Jury Panel Hospitality & Scoring Compilation" },
+  { id: 13, name: "Dattatreya", usn: "NN25MCA027", sec: "3 'A'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "MALE", assignedRound: "ROUND 1 (AWAKENING)", assignedVenue: "Nethravathi Seminar Hall (4th Floor)", timeSlot: "09:30 AM - 12:00 PM", duty: "Network Log Verification & System Check" },
+  { id: 14, name: "Hrithik Acharya", usn: "NN25MCA048", sec: "3 'A'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "MALE", assignedRound: "ROUND 2 (VERDICT)", assignedVenue: "Nethravathi Hall (4th Floor)", timeSlot: "02:00 PM - 04:00 PM", duty: "Timekeeper & Evidence Verification" },
+  { id: 15, name: "Amrutha Shetty", usn: "NN25MCA013", sec: "3 'A'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "FEMALE", assignedRound: "ROUND 3 (FRAGMENTS)", assignedVenue: "Nethravathi Seminar Hall (4th Floor)", timeSlot: "10:00 AM - 12:30 PM", duty: "Hardware Clue Table Invigilation" },
+  { id: 16, name: "VIHAS", usn: "NU26MCA172", sec: "1 'C'", category: "Committee", role: "Decoration", status: "OTHER_COMMITTEE", gender: "MALE", assignedRound: "N/A", assignedVenue: "Decoration Desk", timeSlot: "FULL DAY", duty: "Venue Decoration & Backdrop Setup" },
+  { id: 17, name: "Yajnesh", usn: "N26MCA179", sec: "1 'C'", category: "Committee", role: "Decoration", status: "OTHER_COMMITTEE", gender: "MALE", assignedRound: "N/A", assignedVenue: "Decoration Desk", timeSlot: "FULL DAY", duty: "Venue Decoration & Backdrop Setup" },
+  { id: 18, name: "Vidyashree K R", usn: "NN25MCA175", sec: "3 'C'", category: "Event", role: "Dance", status: "OTHER_COMMITTEE", gender: "FEMALE", assignedRound: "N/A", assignedVenue: "Cultural Stage", timeSlot: "FULL DAY", duty: "Cultural Event Coordination" },
+  { id: 19, name: "Varshini", usn: "NN25MCA172", sec: "3 'C'", category: "Event", role: "Dance", status: "OTHER_COMMITTEE", gender: "FEMALE", assignedRound: "N/A", assignedVenue: "Cultural Stage", timeSlot: "FULL DAY", duty: "Cultural Event Coordination" },
+  { id: 20, name: "Shreya S Rai", usn: "NN25MCA31", sec: "3 'C'", category: "Event", role: "Dance", status: "OTHER_COMMITTEE", gender: "FEMALE", assignedRound: "N/A", assignedVenue: "Cultural Stage", timeSlot: "FULL DAY", duty: "Cultural Event Coordination" }
+];
 
 export async function fetchAnnouncements() {
   try {
@@ -180,13 +204,16 @@ export async function fetchAnnouncements() {
     console.warn("Backend offline, using fallback announcements", e);
   }
 
+  const saved = localStorage.getItem("leviathan_urgent_command");
+  const urgentText = saved || "All IT Manager Volunteers report to Nethravathi Seminar Hall (4th Floor) at 09:00 AM on September 17 for final briefing.";
+
   return [
     {
       id: 1,
-      title: "VOLUNTEER COMMAND BRIEFING",
-      message: "All IT Manager Volunteers report to Nethravathi Seminar Hall at 09:00 AM on September 17 for final briefing.",
+      title: "URGENT COMMANDER BROADCAST",
+      message: urgentText,
       priority: "HIGH",
-      createdAt: "2026-09-17T08:00:00"
+      createdAt: new Date().toISOString()
     },
     {
       id: 2,
@@ -198,31 +225,7 @@ export async function fetchAnnouncements() {
   ];
 }
 
-// 20 Volunteer Roster transcribed from official sheet (media_1788429501131.jpg)
-export const OFFICIAL_VOLUNTEERS = [
-  { id: 1, name: "Dhanush", usn: "NN25MCA030", sec: "1 'A'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "MALE", assignedRound: "ROUND 1 (AWAKENING)", assignedVenue: "Nethravathi Seminar Hall", timeSlot: "09:30 AM - 12:00 PM" },
-  { id: 2, name: "Rohan Shetty", usn: "NU26MCA116", sec: "1 'B'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "MALE", assignedRound: "ROUND 1 (AWAKENING)", assignedVenue: "Nethravathi Seminar Hall", timeSlot: "09:30 AM - 12:00 PM" },
-  { id: 3, name: "Raksha Shetty", usn: "NU26MCA109", sec: "1 'B'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "FEMALE", assignedRound: "ROUND 2 (VERDICT)", assignedVenue: "Nethravathi Hall", timeSlot: "02:00 PM - 04:00 PM" },
-  { id: 4, name: "Sushanth Shetty", usn: "NU26MCA158", sec: "1 'C'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "MALE", assignedRound: "ROUND 2 (VERDICT)", assignedVenue: "Nethravathi Hall", timeSlot: "02:00 PM - 04:00 PM" },
-  { id: 5, name: "SHREYAS P SHETTY", usn: "NU26MCA142", sec: "1 'C'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "MALE", assignedRound: "ROUND 3 (FRAGMENTS)", assignedVenue: "Nethravathi Seminar Hall", timeSlot: "10:00 AM - 12:30 PM" },
-  { id: 6, name: "Tanushi Adappa", usn: "NU26MCA161", sec: "1 'C'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "FEMALE", assignedRound: "ROUND 3 (FRAGMENTS)", assignedVenue: "Nethravathi Seminar Hall", timeSlot: "10:00 AM - 12:30 PM" },
-  { id: 7, name: "Akshatha Rai K", usn: "NN25MCA008", sec: "3 'A'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "FEMALE", assignedRound: "ROUND 4 (JUDGMENT)", assignedVenue: "Main Auditorium Arena", timeSlot: "02:00 PM - 05:00 PM" },
-  { id: 8, name: "Deeksha", usn: "NN25MCA028", sec: "3 'A'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "FEMALE", assignedRound: "ROUND 4 (JUDGMENT)", assignedVenue: "Main Auditorium Arena", timeSlot: "02:00 PM - 05:00 PM" },
-  { id: 9, name: "Hruthvik N V", usn: "NN25MCA050", sec: "3 'A'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "MALE", assignedRound: "ROUND 1 (AWAKENING)", assignedVenue: "Nethravathi Seminar Hall", timeSlot: "09:30 AM - 12:00 PM" },
-  { id: 10, name: "Avilash", usn: "NN25MCA020", sec: "3 'A'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "MALE", assignedRound: "ROUND 2 (VERDICT)", assignedVenue: "Nethravathi Hall", timeSlot: "02:00 PM - 04:00 PM" },
-  { id: 11, name: "G Anup", usn: "NN25MCA037", sec: "3 'A'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "MALE", assignedRound: "ROUND 3 (FRAGMENTS)", assignedVenue: "Nethravathi Seminar Hall", timeSlot: "10:00 AM - 12:30 PM" },
-  { id: 12, name: "Harshini R Shetty", usn: "NN25MCA043", sec: "3 'A'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "FEMALE", assignedRound: "ROUND 4 (JUDGMENT)", assignedVenue: "Main Auditorium Arena", timeSlot: "02:00 PM - 05:00 PM" },
-  { id: 13, name: "Dattatreya", usn: "NN25MCA027", sec: "3 'A'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "MALE", assignedRound: "ROUND 1 (AWAKENING)", assignedVenue: "Nethravathi Seminar Hall", timeSlot: "09:30 AM - 12:00 PM" },
-  { id: 14, name: "Hrithik Acharya", usn: "NN25MCA048", sec: "3 'A'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "MALE", assignedRound: "ROUND 2 (VERDICT)", assignedVenue: "Nethravathi Hall", timeSlot: "02:00 PM - 04:00 PM" },
-  { id: 15, name: "Amrutha Shetty", usn: "NN25MCA013", sec: "3 'A'", category: "Event", role: "IT Manager", status: "ACTIVE", gender: "FEMALE", assignedRound: "ROUND 3 (FRAGMENTS)", assignedVenue: "Nethravathi Seminar Hall", timeSlot: "10:00 AM - 12:30 PM" },
-  { id: 16, name: "VIHAS", usn: "NU26MCA172", sec: "1 'C'", category: "Committee", role: "Decoration", status: "OTHER_COMMITTEE", gender: "MALE", assignedRound: "N/A", assignedVenue: "Decoration Desk", timeSlot: "FULL DAY" },
-  { id: 17, name: "Yajnesh", usn: "N26MCA179", sec: "1 'C'", category: "Committee", role: "Decoration", status: "OTHER_COMMITTEE", gender: "MALE", assignedRound: "N/A", assignedVenue: "Decoration Desk", timeSlot: "FULL DAY" },
-  { id: 18, name: "Vidyashree K R", usn: "NN25MCA175", sec: "3 'C'", category: "Event", role: "Dance", status: "OTHER_COMMITTEE", gender: "FEMALE", assignedRound: "N/A", assignedVenue: "Cultural Stage", timeSlot: "FULL DAY" },
-  { id: 19, name: "Varshini", usn: "NN25MCA172", sec: "3 'C'", category: "Event", role: "Dance", status: "OTHER_COMMITTEE", gender: "FEMALE", assignedRound: "N/A", assignedVenue: "Cultural Stage", timeSlot: "FULL DAY" },
-  { id: 20, name: "Shreya S Rai", usn: "NN25MCA31", sec: "3 'C'", category: "Event", role: "Dance", status: "OTHER_COMMITTEE", gender: "FEMALE", assignedRound: "N/A", assignedVenue: "Cultural Stage", timeSlot: "FULL DAY" }
-];
-
-// Event Head Authentication
+// Real User Authentication
 export async function loginUser(nameOrEmail, password) {
   try {
     const res = await fetch(`${API_BASE_URL}/auth/login`, {
@@ -259,9 +262,12 @@ export async function loginUser(nameOrEmail, password) {
       name: foundVol.name,
       role: "ROLE_VOLUNTEER",
       usn: foundVol.usn,
+      sec: foundVol.sec,
+      category: foundVol.category,
       assignedRound: foundVol.assignedRound,
       assignedVenue: foundVol.assignedVenue,
-      timeSlot: foundVol.timeSlot
+      timeSlot: foundVol.timeSlot,
+      duty: foundVol.duty
     };
   }
 
