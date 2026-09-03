@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Mail, Phone, Calendar, Clock, Terminal, Shield, MessageSquareCode } from 'lucide-react';
+import { MapPin, Phone, Calendar, Clock, Terminal, Shield, MessageSquareCode } from 'lucide-react';
 
 const WHATSAPP_GROUP_LINK = "https://chat.whatsapp.com/LkVZPSPNUUDGJjRORgBsPe?mode=gi_t";
 
@@ -35,17 +35,14 @@ export default function ContactSection() {
                 <h3 className="font-display font-bold text-xl text-white uppercase tracking-wide">
                   JATHIN V BANJAN
                 </h3>
+                <span className="text-xs text-stone-400 font-mono">DEPT. OF MCA</span>
               </div>
             </div>
 
-            <div className="space-y-2 pt-4 border-t border-stone-800 text-sm">
+            <div className="pt-4 border-t border-stone-800 text-sm">
               <div className="flex items-center space-x-3 text-stone-300">
                 <Phone className="w-4 h-4 text-crimson-500 shrink-0" />
                 <span className="font-mono text-base font-bold text-white">6364058375</span>
-              </div>
-              <div className="flex items-center space-x-3 text-stone-400 text-xs">
-                <Mail className="w-4 h-4 text-crimson-500 shrink-0" />
-                <span>jathin@semaphorefest.com</span>
               </div>
             </div>
           </div>
@@ -63,17 +60,14 @@ export default function ContactSection() {
                 <h3 className="font-display font-bold text-xl text-white uppercase tracking-wide">
                   HASTH R KARKERA
                 </h3>
+                <span className="text-xs text-stone-400 font-mono">DEPT. OF MCA</span>
               </div>
             </div>
 
-            <div className="space-y-2 pt-4 border-t border-stone-800 text-sm">
+            <div className="pt-4 border-t border-stone-800 text-sm">
               <div className="flex items-center space-x-3 text-stone-300">
                 <Phone className="w-4 h-4 text-crimson-500 shrink-0" />
                 <span className="font-mono text-base font-bold text-white">7338371775</span>
-              </div>
-              <div className="flex items-center space-x-3 text-stone-400 text-xs">
-                <Mail className="w-4 h-4 text-crimson-500 shrink-0" />
-                <span>hasth@semaphorefest.com</span>
               </div>
             </div>
           </div>
@@ -105,7 +99,7 @@ export default function ContactSection() {
 
       {/* Footer */}
       <footer className="mt-20 pt-8 border-t border-stone-800/60 text-center text-xs text-stone-500">
-        <p>© 2026 SEMAPHORE FEST | DEPARTMENT OF INFORMATION TECHNOLOGY. ALL RIGHTS RESERVED.</p>
+        <p>© 2026 SEMAPHORE FEST | DEPARTMENT OF MCA. ALL RIGHTS RESERVED.</p>
         <p className="mt-1 text-crimson-500 font-bold tracking-[0.2em] uppercase">IT MANAGER — SEPTEMBER 17 & 18, 2026</p>
       </footer>
     </section>

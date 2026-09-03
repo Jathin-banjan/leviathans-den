@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { Volume2, VolumeX, RotateCcw, Play, Sparkles } from 'lucide-react';
+import { Volume2, VolumeX, RotateCcw, Play, Sparkles, Shield } from 'lucide-react';
 import CrowVortexCanvas from './CrowVortexCanvas';
 import EyeTransformation from './EyeTransformation';
 import { audioEngine } from '../utils/audioEngine';
@@ -129,7 +129,7 @@ export default function CinematicIntro({ onComplete }) {
         )}
       </div>
 
-      {/* START PROMPT OVERLAY (Requires click to initialize AudioContext cleanly) */}
+      {/* START PROMPT OVERLAY */}
       {!hasStarted && (
         <div className="absolute inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-4">
           <div className="text-center max-w-md space-y-6">
@@ -168,7 +168,7 @@ export default function CinematicIntro({ onComplete }) {
             bodyDisintegrating ? 'opacity-0 scale-95 blur-sm transition-all duration-1000' : 'opacity-100'
           }`}
         >
-          {/* Stone Throne & Background Image with Parallax & Camera Push */}
+          {/* Stone Throne & Background Image */}
           <div 
             className="relative w-full max-w-4xl h-[90vh] flex items-center justify-center transition-transform duration-100 ease-out overflow-hidden rounded-3xl"
             style={{
@@ -188,7 +188,17 @@ export default function CinematicIntro({ onComplete }) {
               }`}
             />
 
-            {/* Ambient Dark Fog & Crimson Rim Lighting Overlay */}
+            {/* Custom Leviathan Crimson Emblem Overlay on Bottom Right */}
+            <div className="absolute bottom-6 right-6 z-30 p-2.5 rounded-xl bg-black/90 border border-crimson-800/80 flex items-center space-x-2 backdrop-blur shadow-[0_0_20px_rgba(220,38,38,0.5)]">
+              <div className="w-6 h-6 rounded-lg bg-crimson-950 border border-crimson-600 flex items-center justify-center font-display font-black text-crimson-500 text-xs">
+                L
+              </div>
+              <span className="font-display font-bold text-[10px] tracking-widest text-white uppercase">
+                LEVIATHAN
+              </span>
+            </div>
+
+            {/* Ambient Dark Fog Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/80 opacity-70" />
             <div 
               className="absolute inset-0 transition-opacity duration-1000 pointer-events-none mix-blend-soft-light"
@@ -196,25 +206,19 @@ export default function CinematicIntro({ onComplete }) {
                 background: 'radial-gradient(circle at 50% 50%, rgba(220, 38, 38, 0.4) 0%, transparent 70%)'
               }}
             />
-
-            {/* Subtle Chest/Breathing CSS Pulse for Still Image Realism */}
-            <div 
-              className="absolute inset-0 animate-pulse pointer-events-none opacity-20 bg-crimson-600/10 mix-blend-screen"
-            />
           </div>
         </div>
       )}
 
-      {/* SCENE 3: DRAMATIC FACIAL CLOSE-UP & SUPERNATURAL EYE TRANSFORMATION */}
+      {/* SCENE 3: DRAMATIC EYE TRANSFORMATION */}
       {hasStarted && (
         <EyeTransformation active={showEyeCloseUp} progress={progress} />
       )}
 
-      {/* SCENE 6 & 7: METALLIC 3D TITLE "IT MANAGER" & TAGLINE "WELCOME TO LEVIATHAN'S DEN" */}
+      {/* SCENE 6 & 7: METALLIC 3D TITLE */}
       {hasStarted && (scenePhase === 6 || scenePhase === 7) && (
         <div className="absolute inset-0 z-30 flex flex-col items-center justify-center text-center p-4">
           
-          {/* IT MANAGER Metallic 3D Extruded Title */}
           <div className="relative animate-in fade-in zoom-in-90 duration-700">
             <h1 
               className="font-display font-black text-6xl sm:text-8xl md:text-9xl tracking-tight uppercase text-transparent bg-clip-text bg-gradient-to-b from-red-500 via-crimson-600 to-red-950 drop-shadow-[0_10px_20px_rgba(0,0,0,0.9)]"
@@ -228,7 +232,6 @@ export default function CinematicIntro({ onComplete }) {
             <div className="absolute -inset-4 bg-crimson-600/20 blur-3xl -z-10 rounded-full animate-pulse" />
           </div>
 
-          {/* TAGLINE: WELCOME TO LEVIATHAN'S DEN (Revealed in Scene 7) */}
           {scenePhase === 7 && (
             <div className="mt-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
               <span className="font-cinematic font-bold text-lg sm:text-2xl md:text-3xl text-stone-300 tracking-[0.3em] uppercase block drop-shadow-[0_0_15px_#dc2626]">

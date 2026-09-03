@@ -28,7 +28,7 @@ export default function Navigation({ onReplayIntro, onOpenLogin }) {
     { name: 'SCHEDULE', href: '#schedule' },
     { name: 'VENUES', href: '#venues' },
     { name: 'TEAM', href: '#team' },
-    { name: 'MY ROLE', href: '#my-role' },
+    { name: 'AMBASSADOR', href: '#ambassador' },
     { name: 'ANNOUNCEMENTS', href: '#announcements' },
   ];
 
@@ -53,8 +53,8 @@ export default function Navigation({ onReplayIntro, onOpenLogin }) {
             <span className="font-display font-black tracking-wider text-base sm:text-lg text-white block leading-none group-hover:text-crimson-400 transition-colors uppercase">
               IT MANAGER
             </span>
-            <span className="text-[9px] tracking-[0.25em] text-crimson-500 font-bold uppercase block mt-1">
-              SEMAPHORE FEST
+            <span className="text-[9px] tracking-[0.2em] text-crimson-500 font-bold uppercase block mt-1">
+              DEPT. OF MCA • SEMAPHORE FEST
             </span>
           </div>
         </a>
@@ -74,7 +74,6 @@ export default function Navigation({ onReplayIntro, onOpenLogin }) {
 
         {/* Actions: WhatsApp Group + Replay Intro & Login */}
         <div className="hidden sm:flex items-center space-x-3">
-          {/* WhatsApp Direct Group Link */}
           <a
             href={WHATSAPP_GROUP_LINK}
             target="_blank"

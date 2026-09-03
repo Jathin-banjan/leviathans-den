@@ -13,10 +13,10 @@ export default function HeroSection({ onReplayIntro }) {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         
-        {/* Fest Pill */}
+        {/* Department & Fest Pill */}
         <div className="inline-flex items-center space-x-2.5 px-4 py-1.5 rounded-full bg-stone-900/80 border border-crimson-900/60 text-crimson-400 text-xs font-bold tracking-[0.25em] uppercase mb-6 shadow-[0_0_20px_rgba(220,38,38,0.15)]">
           <Flame className="w-3.5 h-3.5 text-crimson-500 animate-pulse" />
-          <span>SEMAPHORE FEST EVENT OPERATIONS PORTAL</span>
+          <span>DEPARTMENT OF MCA • SEMAPHORE FEST</span>
         </div>
 
         {/* Display Title */}
@@ -70,7 +70,7 @@ export default function HeroSection({ onReplayIntro }) {
             href="#schedule"
             className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-crimson-700 via-crimson-600 to-red-600 text-white font-extrabold text-xs uppercase tracking-[0.2em] shadow-[0_0_35px_rgba(220,38,38,0.5)] hover:scale-105 hover:brightness-110 transition-all flex items-center justify-center space-x-2"
           >
-            <span>VIEW OPERATIONAL SCHEDULE</span>
+            <span>OPERATIONAL SCHEDULE</span>
             <ChevronRight className="w-4 h-4" />
           </a>
 
@@ -106,8 +106,8 @@ export default function HeroSection({ onReplayIntro }) {
 
           <div className="p-4 rounded-xl bg-stone-900/40 border border-stone-800/80 backdrop-blur border-glow-hover text-left">
             <Terminal className="w-4 h-4 text-crimson-500 mb-2" />
-            <span className="text-[10px] text-stone-500 block uppercase tracking-wider">PORTAL TYPE</span>
-            <span className="text-sm font-bold text-white tracking-wide">EVENT TEAM COMMAND</span>
+            <span className="text-[10px] text-stone-500 block uppercase tracking-wider">DEPARTMENT</span>
+            <span className="text-sm font-bold text-white tracking-wide">DEPT. OF MCA</span>
           </div>
 
           <div className="p-4 rounded-xl bg-stone-900/40 border border-stone-800/80 backdrop-blur border-glow-hover text-left">

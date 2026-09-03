@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Lock, Mail, ShieldAlert, KeyRound, User } from 'lucide-react';
+import { X, Lock, ShieldAlert, KeyRound, User } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function LoginModal({ isOpen, onClose }) {
@@ -23,13 +23,8 @@ export default function LoginModal({ isOpen, onClose }) {
     if (res.success) {
       onClose();
     } else {
-      setError(res.error || 'Authentication failed! Check Name/Password.');
+      setError(res.error || 'Authentication failed! Invalid Name or Password.');
     }
-  };
-
-  const handleQuickFill = (name, pass) => {
-    setEmailOrName(name);
-    setPassword(pass);
   };
 
   return (
@@ -79,7 +74,7 @@ export default function LoginModal({ isOpen, onClose }) {
                 required
                 value={emailOrName}
                 onChange={(e) => setEmailOrName(e.target.value)}
-                placeholder="JATHIN V BANJAN or HASTH R KARKERA"
+                placeholder="Enter Your Name"
                 className="w-full pl-11 pr-4 py-3 rounded-xl bg-stone-900 border border-stone-800 text-white text-sm focus:outline-none focus:border-crimson-600 transition-colors"
               />
             </div>
@@ -96,7 +91,7 @@ export default function LoginModal({ isOpen, onClose }) {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="head123 or event123"
+                placeholder="••••••••"
                 className="w-full pl-11 pr-4 py-3 rounded-xl bg-stone-900 border border-stone-800 text-white text-sm focus:outline-none focus:border-crimson-600 transition-colors"
               />
             </div>
@@ -111,34 +106,10 @@ export default function LoginModal({ isOpen, onClose }) {
           </button>
         </form>
 
-        {/* Demo Quick Fills */}
-        <div className="mt-8 pt-6 border-t border-stone-800/80 text-center space-y-3">
-          <span className="text-[10px] font-bold tracking-widest text-stone-500 uppercase block">
-            QUICK AUTHENTICATION PRESETS
+        <div className="mt-8 pt-4 border-t border-stone-800/80 text-center">
+          <span className="text-[10px] font-mono text-stone-500 uppercase">
+            SECURE LEVIATHAN OPERATIONS GATEWAY
           </span>
-          <div className="flex flex-col space-y-2 text-xs">
-            <button
-              onClick={() => handleQuickFill('JATHIN V BANJAN', 'head123')}
-              className="px-3 py-1.5 rounded-lg bg-stone-900 border border-stone-800 hover:border-crimson-700 text-stone-300 hover:text-white transition-all text-[11px] font-mono text-left flex justify-between items-center"
-            >
-              <span>JATHIN V BANJAN (HEAD)</span>
-              <code className="text-crimson-400">head123</code>
-            </button>
-            <button
-              onClick={() => handleQuickFill('HASTH R KARKERA', 'head123')}
-              className="px-3 py-1.5 rounded-lg bg-stone-900 border border-stone-800 hover:border-crimson-700 text-stone-300 hover:text-white transition-all text-[11px] font-mono text-left flex justify-between items-center"
-            >
-              <span>HASTH R KARKERA (HEAD)</span>
-              <code className="text-crimson-400">head123</code>
-            </button>
-            <button
-              onClick={() => handleQuickFill('Dhanush', 'event123')}
-              className="px-3 py-1.5 rounded-lg bg-stone-900 border border-stone-800 hover:border-crimson-700 text-stone-300 hover:text-white transition-all text-[11px] font-mono text-left flex justify-between items-center"
-            >
-              <span>VOLUNTEER AUTHENTICATION</span>
-              <code className="text-emerald-400">event123</code>
-            </button>
-          </div>
         </div>
 
       </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UserCheck, Flame, Flower2, ShieldAlert, CheckCircle2, UserX } from 'lucide-react';
+import { UserCheck, Flame, Flower2, ShieldAlert, CheckCircle2, UserX, Phone } from 'lucide-react';
 import { OFFICIAL_VOLUNTEERS } from '../api/client';
 
 export default function TeamSection() {
@@ -8,16 +8,20 @@ export default function TeamSection() {
 
   const eventHeads = [
     {
+      name: 'JATHIN V BANJAN',
       role: 'EVENT HEAD / COMMANDER 01',
-      dept: 'DEPT. OF INFORMATION TECHNOLOGY',
+      dept: 'DEPT. OF MCA',
       gender: 'MALE',
-      code: 'HEAD-ITM-01'
+      code: 'HEAD-ITM-01',
+      phone: '6364058375'
     },
     {
+      name: 'HASTH R KARKERA',
       role: 'EVENT HEAD / COMMANDER 02',
-      dept: 'DEPT. OF INFORMATION TECHNOLOGY',
-      gender: 'FEMALE',
-      code: 'HEAD-ITM-02'
+      dept: 'DEPT. OF MCA',
+      gender: 'MALE',
+      code: 'HEAD-ITM-02',
+      phone: '7338371775'
     }
   ];
 
@@ -56,15 +60,9 @@ export default function TeamSection() {
                 <div className="flex items-start space-x-6 mb-6">
                   {/* Akatsuki Commander Avatar */}
                   <div className="w-20 h-20 rounded-2xl bg-stone-950 border border-crimson-800/80 p-1 shrink-0 relative flex items-center justify-center shadow-[0_0_20px_rgba(220,38,38,0.4)]">
-                    {head.gender === 'MALE' ? (
-                      <div className="w-full h-full rounded-xl bg-gradient-to-b from-crimson-950 via-stone-900 to-black flex items-center justify-center relative overflow-hidden">
-                        <Flame className="w-8 h-8 text-crimson-500 animate-pulse" />
-                      </div>
-                    ) : (
-                      <div className="w-full h-full rounded-xl bg-gradient-to-b from-stone-900 via-crimson-950 to-black flex items-center justify-center relative overflow-hidden">
-                        <Flower2 className="w-8 h-8 text-crimson-400 animate-pulse" />
-                      </div>
-                    )}
+                    <div className="w-full h-full rounded-xl bg-gradient-to-b from-crimson-950 via-stone-900 to-black flex items-center justify-center relative overflow-hidden">
+                      <Flame className="w-8 h-8 text-crimson-500 animate-pulse" />
+                    </div>
                   </div>
 
                   <div>
@@ -72,17 +70,17 @@ export default function TeamSection() {
                       {head.role}
                     </span>
                     <h4 className="font-display font-bold text-xl text-white uppercase tracking-wide mt-1">
-                      ASSIGNMENT PENDING
+                      {head.name}
                     </h4>
-                    <span className="text-xs text-stone-400 block mt-1 font-mono">
+                    <span className="text-xs text-stone-400 block mt-0.5 font-mono">
                       {head.code} • {head.dept}
                     </span>
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-stone-800/80 flex items-center space-x-2 text-amber-500 text-xs font-semibold">
-                  <ShieldAlert className="w-4 h-4 shrink-0" />
-                  <span>Data Pending — Profile details will be updated.</span>
+                <div className="pt-4 border-t border-stone-800/80 flex items-center space-x-2 text-white text-xs font-mono font-bold">
+                  <Phone className="w-4 h-4 text-crimson-500 shrink-0" />
+                  <span>DIRECT PHONE: {head.phone}</span>
                 </div>
               </div>
             ))}

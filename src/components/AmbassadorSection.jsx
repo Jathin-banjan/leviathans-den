@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, ShieldCheck, Crown } from 'lucide-react';
+import { Star, ShieldCheck, Flame, Sparkles } from 'lucide-react';
 
 export default function AmbassadorSection() {
   return (
@@ -35,8 +35,8 @@ export default function AmbassadorSection() {
 
               {/* Tag overlay */}
               <div className="absolute bottom-4 left-4 right-4 z-20 text-center">
-                <span className="px-3 py-1 rounded-full bg-stone-950/90 border border-crimson-700 text-[10px] font-bold text-white tracking-widest uppercase shadow-[0_0_15px_#dc2626]">
-                  SEMAPHORE FEST 2026 ICON
+                <span className="px-3.5 py-1 rounded-full bg-stone-950/90 border border-crimson-700 text-[10px] font-bold text-white tracking-widest uppercase shadow-[0_0_15px_#dc2626]">
+                  AURA FARMER 99999+
                 </span>
               </div>
             </div>
@@ -52,16 +52,23 @@ export default function AmbassadorSection() {
                 </h3>
               </div>
 
-              <p className="text-stone-300 text-sm sm:text-base leading-relaxed font-light">
-                Representing the supreme technical mastery and dark strategic dominance of Leviathan's Den. As the official Brand Ambassador for IT Manager at Semaphore Fest 2026, Dhanush G Gowda sets the benchmark for leadership excellence.
+              <div className="p-4 rounded-2xl bg-crimson-950/30 border border-crimson-900/60 space-y-2">
+                <div className="flex items-center space-x-2 text-xs font-bold text-crimson-400 uppercase">
+                  <Flame className="w-4 h-4 text-crimson-500 animate-pulse" />
+                  <span>SUPREME HANDSOME ICON & AURA LEADER</span>
+                </div>
+                <p className="text-sm font-semibold text-white leading-relaxed">
+                  "Nitte's most handsome male, Aura Farmer 99999+."
+                </p>
+              </div>
+
+              <p className="text-stone-300 text-xs sm:text-sm leading-relaxed font-light">
+                Representing the supreme technical mastery, dark strategic dominance, and unmatched aura of Leviathan's Den. As the official Brand Ambassador for IT Manager at Semaphore Fest 2026, Dhanush G Gowda sets the pinnacle standard for leadership.
               </p>
 
-              <div className="p-4 rounded-xl bg-stone-900/60 border border-stone-800 space-y-2">
-                <div className="flex items-center space-x-2 text-xs font-bold text-stone-200">
-                  <ShieldCheck className="w-4 h-4 text-crimson-500" />
-                  <span>KEYNOTE INAUGURAL ADDRESS</span>
-                </div>
-                <p className="text-xs text-stone-400 font-mono">
+              <div className="p-4 rounded-xl bg-stone-900/60 border border-stone-800 space-y-1 text-xs">
+                <span className="text-[10px] font-bold text-stone-500 uppercase block">KEYNOTE INAUGURAL VENUE:</span>
+                <p className="font-bold text-white font-mono">
                   Sambhram Auditorium (Ramanujan Block) — September 17, 2026 @ 09:00 AM IST
                 </p>
               </div>
