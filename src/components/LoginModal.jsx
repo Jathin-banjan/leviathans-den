@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { X, Lock, Mail, ShieldAlert, KeyRound } from 'lucide-react';
+import { X, Lock, Mail, ShieldAlert, KeyRound, User } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function LoginModal({ isOpen, onClose }) {
-  const [email, setEmail] = useState('');
+  const [emailOrName, setEmailOrName] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -17,19 +17,19 @@ export default function LoginModal({ isOpen, onClose }) {
     setError('');
     setLoading(true);
 
-    const res = await login(email, password);
+    const res = await login(emailOrName, password);
     setLoading(false);
 
     if (res.success) {
       onClose();
     } else {
-      setError(res.error || 'Authentication failed');
+      setError(res.error || 'Authentication failed! Check Name/Password.');
     }
   };
 
-  const handleQuickFill = (roleEmail) => {
-    setEmail(roleEmail);
-    setPassword('password123');
+  const handleQuickFill = (name, pass) => {
+    setEmailOrName(name);
+    setPassword(pass);
   };
 
   return (
@@ -56,7 +56,7 @@ export default function LoginModal({ isOpen, onClose }) {
             COMMAND ACCESS
           </h3>
           <p className="text-xs text-stone-400 mt-1 font-light">
-            Sign in as Event Head or Volunteer to enter portal.
+            Authenticate as Event Commander or Volunteer.
           </p>
         </div>
 
@@ -70,16 +70,16 @@ export default function LoginModal({ isOpen, onClose }) {
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label className="text-[10px] font-bold tracking-widest text-stone-400 uppercase block mb-2">
-              PORTAL EMAIL
+              COMMANDER / VOLUNTEER NAME
             </label>
             <div className="relative">
-              <Mail className="w-4 h-4 text-stone-500 absolute left-4 top-1/2 -translate-y-1/2" />
+              <User className="w-4 h-4 text-stone-500 absolute left-4 top-1/2 -translate-y-1/2" />
               <input
-                type="email"
+                type="text"
                 required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="head@semaphorefest.com"
+                value={emailOrName}
+                onChange={(e) => setEmailOrName(e.target.value)}
+                placeholder="JATHIN V BANJAN or HASTH R KARKERA"
                 className="w-full pl-11 pr-4 py-3 rounded-xl bg-stone-900 border border-stone-800 text-white text-sm focus:outline-none focus:border-crimson-600 transition-colors"
               />
             </div>
@@ -87,7 +87,7 @@ export default function LoginModal({ isOpen, onClose }) {
 
           <div>
             <label className="text-[10px] font-bold tracking-widest text-stone-400 uppercase block mb-2">
-              AUTHENTICATION KEY
+              AUTHENTICATION PASSWORD
             </label>
             <div className="relative">
               <Lock className="w-4 h-4 text-stone-500 absolute left-4 top-1/2 -translate-y-1/2" />
@@ -96,7 +96,7 @@ export default function LoginModal({ isOpen, onClose }) {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder="head123 or event123"
                 className="w-full pl-11 pr-4 py-3 rounded-xl bg-stone-900 border border-stone-800 text-white text-sm focus:outline-none focus:border-crimson-600 transition-colors"
               />
             </div>
@@ -107,27 +107,36 @@ export default function LoginModal({ isOpen, onClose }) {
             disabled={loading}
             className="w-full py-4 rounded-xl bg-gradient-to-r from-crimson-700 via-crimson-600 to-red-600 text-white font-extrabold text-xs uppercase tracking-[0.2em] shadow-[0_0_25px_rgba(220,38,38,0.5)] hover:brightness-110 transition-all"
           >
-            {loading ? 'AUTHENTICATING...' : 'ACCESS PORTAL'}
+            {loading ? 'AUTHENTICATING...' : 'ACCESS COMMAND PORTAL'}
           </button>
         </form>
 
-        {/* Demo Roles Quick fill */}
+        {/* Demo Quick Fills */}
         <div className="mt-8 pt-6 border-t border-stone-800/80 text-center space-y-3">
           <span className="text-[10px] font-bold tracking-widest text-stone-500 uppercase block">
-            DEMO CREDENTIALS
+            QUICK AUTHENTICATION PRESETS
           </span>
-          <div className="flex justify-center space-x-3 text-xs">
+          <div className="flex flex-col space-y-2 text-xs">
             <button
-              onClick={() => handleQuickFill('head@semaphorefest.com')}
-              className="px-3 py-1.5 rounded-lg bg-stone-900 border border-stone-800 hover:border-crimson-700 text-stone-300 hover:text-white transition-all text-[11px]"
+              onClick={() => handleQuickFill('JATHIN V BANJAN', 'head123')}
+              className="px-3 py-1.5 rounded-lg bg-stone-900 border border-stone-800 hover:border-crimson-700 text-stone-300 hover:text-white transition-all text-[11px] font-mono text-left flex justify-between items-center"
             >
-              Event Head
+              <span>JATHIN V BANJAN (HEAD)</span>
+              <code className="text-crimson-400">head123</code>
             </button>
             <button
-              onClick={() => handleQuickFill('volunteer@semaphorefest.com')}
-              className="px-3 py-1.5 rounded-lg bg-stone-900 border border-stone-800 hover:border-crimson-700 text-stone-300 hover:text-white transition-all text-[11px]"
+              onClick={() => handleQuickFill('HASTH R KARKERA', 'head123')}
+              className="px-3 py-1.5 rounded-lg bg-stone-900 border border-stone-800 hover:border-crimson-700 text-stone-300 hover:text-white transition-all text-[11px] font-mono text-left flex justify-between items-center"
             >
-              Volunteer
+              <span>HASTH R KARKERA (HEAD)</span>
+              <code className="text-crimson-400">head123</code>
+            </button>
+            <button
+              onClick={() => handleQuickFill('Dhanush', 'event123')}
+              className="px-3 py-1.5 rounded-lg bg-stone-900 border border-stone-800 hover:border-crimson-700 text-stone-300 hover:text-white transition-all text-[11px] font-mono text-left flex justify-between items-center"
+            >
+              <span>VOLUNTEER AUTHENTICATION</span>
+              <code className="text-emerald-400">event123</code>
             </button>
           </div>
         </div>

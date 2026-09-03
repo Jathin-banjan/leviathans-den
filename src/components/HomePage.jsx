@@ -11,6 +11,7 @@ import AmbassadorSection from './AmbassadorSection';
 import AnnouncementsSection from './AnnouncementsSection';
 import VolunteerDashboard from './VolunteerDashboard';
 import EventHeadDashboard from './EventHeadDashboard';
+import AdminPanel from './AdminPanel';
 import ContactSection from './ContactSection';
 import LoginModal from './LoginModal';
 import { useAuth } from '../context/AuthContext';
@@ -30,14 +31,20 @@ export default function HomePage({ onReplayIntro }) {
         onOpenLogin={() => setLoginOpen(true)}
       />
 
-      {/* Main Continuous Operations Portal Sections */}
+      {/* Main Operations Portal Sections */}
       <main className="relative z-10">
         <HeroSection onReplayIntro={onReplayIntro} />
         <AboutSection />
         <RoundsSection />
 
-        {/* Role-Based Command Dashboards when logged in */}
-        {user?.role === 'ROLE_EVENT_HEAD' && <EventHeadDashboard />}
+        {/* Role-Based Command Dashboards & Admin Panel when logged in */}
+        {user?.role === 'ROLE_EVENT_HEAD' && (
+          <>
+            <EventHeadDashboard />
+            <AdminPanel />
+          </>
+        )}
+
         {user?.role === 'ROLE_VOLUNTEER' && <VolunteerDashboard />}
         {!user && <VolunteerDashboard />}
 
