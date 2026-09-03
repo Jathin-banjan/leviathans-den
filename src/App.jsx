@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AuthProvider } from './context/AuthContext';
 import CinematicIntro from './components/CinematicIntro';
 import HomePage from './components/HomePage';
 
@@ -14,14 +15,16 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white relative">
-      {/* Home Page Experience */}
-      <HomePage onReplayIntro={handleReplayIntro} />
+    <AuthProvider>
+      <div className="min-h-screen bg-black text-white relative">
+        {/* Event Operations Portal */}
+        <HomePage onReplayIntro={handleReplayIntro} />
 
-      {/* Cinematic Welcome Intro Overlay (Shown on launch & replay) */}
-      {showIntro && (
-        <CinematicIntro onComplete={handleIntroComplete} />
-      )}
-    </div>
+        {/* Cinematic Welcome Intro Sequence Overlay */}
+        {showIntro && (
+          <CinematicIntro onComplete={handleIntroComplete} />
+        )}
+      </div>
+    </AuthProvider>
   );
 }

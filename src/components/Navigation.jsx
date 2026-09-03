@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Play, ChevronRight, Menu, X } from 'lucide-react';
+import { Play, LogIn, LogOut, Menu, X, UserCheck } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
-export default function Navigation({ onReplayIntro }) {
+export default function Navigation({ onReplayIntro, onOpenLogin }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,16 +23,18 @@ export default function Navigation({ onReplayIntro }) {
     { name: 'HOME', href: '#home' },
     { name: 'ABOUT', href: '#about' },
     { name: 'ROUNDS', href: '#rounds' },
+    { name: 'SCHEDULE', href: '#schedule' },
+    { name: 'VENUES', href: '#venues' },
     { name: 'TEAM', href: '#team' },
-    { name: 'AMBASSADOR', href: '#ambassador' },
-    { name: 'CONTACT', href: '#contact' },
+    { name: 'MY ROLE', href: '#my-role' },
+    { name: 'ANNOUNCEMENTS', href: '#announcements' },
   ];
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
         isScrolled
-          ? 'bg-black/85 backdrop-blur-md border-b border-stone-800/80 py-4 shadow-[0_10px_30px_rgba(0,0,0,0.8)]'
+          ? 'bg-black/90 backdrop-blur-md border-b border-stone-800/80 py-4 shadow-[0_10px_30px_rgba(0,0,0,0.9)]'
           : 'bg-transparent py-6 border-b border-transparent'
       }`}
     >
@@ -38,13 +42,13 @@ export default function Navigation({ onReplayIntro }) {
         
         {/* Brand identity */}
         <a href="#home" className="flex items-center space-x-3 group">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-crimson-600 via-crimson-800 to-stone-950 p-[1px] shadow-[0_0_15px_rgba(220,38,38,0.4)] group-hover:shadow-[0_0_25px_rgba(220,38,38,0.7)] transition-all">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-crimson-600 via-crimson-800 to-stone-950 p-[1px] shadow-[0_0_15px_rgba(220,38,38,0.5)] group-hover:shadow-[0_0_25px_rgba(220,38,38,0.8)] transition-all">
             <div className="w-full h-full bg-stone-950 rounded-lg flex items-center justify-center font-display font-black text-crimson-500 text-lg">
               L
             </div>
           </div>
           <div>
-            <span className="font-display font-black tracking-wider text-lg text-white block leading-none group-hover:text-crimson-400 transition-colors">
+            <span className="font-display font-black tracking-wider text-base sm:text-lg text-white block leading-none group-hover:text-crimson-400 transition-colors uppercase">
               IT MANAGER
             </span>
             <span className="text-[9px] tracking-[0.25em] text-crimson-500 font-bold uppercase block mt-1">
@@ -54,40 +58,55 @@ export default function Navigation({ onReplayIntro }) {
         </a>
 
         {/* Desktop Nav Links */}
-        <nav className="hidden lg:flex items-center space-x-8 text-xs font-semibold tracking-[0.2em]">
+        <nav className="hidden xl:flex items-center space-x-6 text-[11px] font-semibold tracking-[0.18em]">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="text-stone-300 hover:text-white hover:drop-shadow-[0_0_8px_rgba(220,38,38,0.8)] transition-all relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-crimson-600 hover:after:w-full after:transition-all"
+              className="text-stone-300 hover:text-white hover:drop-shadow-[0_0_8px_rgba(220,38,38,0.8)] transition-all relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-crimson-600 hover:after:w-full after:transition-all uppercase"
             >
               {link.name}
             </a>
           ))}
         </nav>
 
-        {/* Actions (Replay Intro + Register CTA) */}
-        <div className="hidden sm:flex items-center space-x-4">
+        {/* Actions (Replay Intro & Login/User Role) */}
+        <div className="hidden sm:flex items-center space-x-3">
           <button
             onClick={onReplayIntro}
-            className="flex items-center space-x-2 px-3.5 py-2 rounded-lg bg-stone-900/90 border border-stone-800 text-stone-300 hover:text-white hover:border-crimson-700 hover:bg-crimson-950/40 transition-all text-xs font-semibold tracking-wider group"
-            title="Replay Cinematic Welcome Experience"
+            className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-stone-900/90 border border-stone-800 text-stone-300 hover:text-white hover:border-crimson-700 hover:bg-crimson-950/40 transition-all text-xs font-semibold tracking-wider group"
+            title="Replay Cinematic Welcome Sequence"
           >
             <Play className="w-3.5 h-3.5 text-crimson-500 fill-crimson-500 group-hover:scale-110 transition-transform" />
             <span>REPLAY INTRO</span>
           </button>
 
-          <a
-            href="#register"
-            className="px-5 py-2.5 rounded-lg bg-gradient-to-r from-crimson-700 via-crimson-600 to-red-600 text-white font-bold text-xs uppercase tracking-widest hover:brightness-125 transition-all shadow-[0_0_20px_rgba(220,38,38,0.4)] flex items-center space-x-1.5"
-          >
-            <span>ENTER DEN</span>
-            <ChevronRight className="w-3.5 h-3.5" />
-          </a>
+          {user ? (
+            <div className="flex items-center space-x-2">
+              <span className="px-3 py-2 rounded-lg bg-stone-900 border border-crimson-900 text-crimson-400 text-[11px] font-mono font-bold uppercase">
+                {user.role === 'ROLE_EVENT_HEAD' ? 'COMMANDER' : 'VOLUNTEER'}
+              </span>
+              <button
+                onClick={logout}
+                className="p-2 rounded-lg bg-stone-900 border border-stone-800 text-stone-400 hover:text-white hover:border-crimson-700 transition-all"
+                title="Sign Out"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={onOpenLogin}
+              className="px-4 py-2 rounded-lg bg-gradient-to-r from-crimson-700 via-crimson-600 to-red-600 text-white font-bold text-xs uppercase tracking-widest hover:brightness-125 transition-all shadow-[0_0_20px_rgba(220,38,38,0.4)] flex items-center space-x-1.5"
+            >
+              <LogIn className="w-3.5 h-3.5" />
+              <span>COMMAND ACCESS</span>
+            </button>
+          )}
         </div>
 
         {/* Mobile menu toggle */}
-        <div className="lg:hidden flex items-center space-x-2">
+        <div className="xl:hidden flex items-center space-x-2">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="p-2 rounded-lg bg-stone-900 border border-stone-800 text-stone-300 hover:text-white"
@@ -99,18 +118,18 @@ export default function Navigation({ onReplayIntro }) {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-stone-950/95 border-b border-stone-800 px-6 py-6 space-y-4 animate-in fade-in slide-in-from-top-4">
+        <div className="xl:hidden bg-stone-950/95 border-b border-stone-800 px-6 py-6 space-y-3 animate-in fade-in slide-in-from-top-4">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="block text-sm font-semibold tracking-widest text-stone-300 hover:text-crimson-500 py-1"
+              className="block text-xs font-semibold tracking-widest text-stone-300 hover:text-crimson-500 py-1 uppercase"
             >
               {link.name}
             </a>
           ))}
-          <div className="pt-4 border-t border-stone-800 flex flex-col space-y-3">
+          <div className="pt-4 border-t border-stone-800 flex flex-col space-y-2">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
@@ -121,13 +140,27 @@ export default function Navigation({ onReplayIntro }) {
               <Play className="w-3.5 h-3.5 text-crimson-500 fill-crimson-500" />
               <span>REPLAY INTRO</span>
             </button>
-            <a
-              href="#register"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center py-3 rounded-lg bg-crimson-600 text-white font-bold text-xs tracking-widest uppercase"
-            >
-              ENTER DEN
-            </a>
+            {!user ? (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenLogin();
+                }}
+                className="w-full text-center py-2.5 rounded-lg bg-crimson-600 text-white font-bold text-xs tracking-widest uppercase"
+              >
+                COMMAND ACCESS
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  logout();
+                }}
+                className="w-full text-center py-2.5 rounded-lg bg-stone-900 border border-crimson-900 text-crimson-400 font-bold text-xs tracking-widest uppercase"
+              >
+                LOGOUT ({user.name})
+              </button>
+            )}
           </div>
         </div>
       )}
