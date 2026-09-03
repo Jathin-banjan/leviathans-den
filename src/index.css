@@ -3,13 +3,44 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --bg-primary: #09090b;
+    --bg-secondary: #111115;
+    --bg-surface: #18181f;
+    --text-primary: #f4f4f5;
+    --text-secondary: #a1a1aa;
+    --accent-crimson: #dc2626;
+    --accent-hover: #ef4444;
+    --border-dark: #27272a;
+    --border-accent: #7f1d1d;
+    --glow-crimson: rgba(220, 38, 38, 0.25);
+  }
+
   body {
-    @apply bg-black text-stone-200 antialiased;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+    selection-background-color: #7f1d1d;
+    selection-color: #ffffff;
   }
 }
 
-/* Custom Metallic Red Glow & Drop Shadow Utility Classes */
+/* Layered Background Noise Texture Overlay */
+.bg-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+/* Premium Typography Classes */
+.font-cinematic {
+  font-family: 'Cinzel', serif;
+}
+
+.font-display {
+  font-family: 'Orbitron', 'Cinzel', sans-serif;
+}
+
+/* Metallic Red Glow & Drop Shadow Utility Classes */
 .text-metallic-crimson {
   background: linear-gradient(180deg, #f87171 0%, #dc2626 40%, #7f1d1d 100%);
   -webkit-background-clip: text;
@@ -17,11 +48,16 @@
   filter: drop-shadow(0 0 20px rgba(220, 38, 38, 0.6));
 }
 
-.bg-radial-vignette {
-  background: radial-gradient(circle at center, transparent 30%, rgba(9, 9, 11, 0.95) 90%);
+.border-glow-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Smooth Scrollbar */
+.border-glow-hover:hover {
+  border-color: rgba(220, 38, 38, 0.6);
+  box-shadow: 0 0 25px rgba(220, 38, 38, 0.25);
+}
+
+/* Smooth Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
