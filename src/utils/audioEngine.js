@@ -156,6 +156,28 @@ class SoundEngine {
     chimeOsc.start(t);
     chimeOsc.stop(t + 1.1);
   }
+
+  playSharinganExplosionSFX() {
+    if (!this.ctx || this.isMuted) return;
+    this.resume();
+    const t = this.ctx.currentTime;
+    const subOsc = this.ctx.createOscillator();
+    const subGain = this.ctx.createGain();
+
+    subOsc.type = 'sine';
+    subOsc.frequency.setValueAtTime(150, t);
+    subOsc.frequency.exponentialRampToValueAtTime(25, t + 1.5);
+
+    subGain.gain.setValueAtTime(1.0, t);
+    subGain.gain.exponentialRampToValueAtTime(0.001, t + 1.6);
+
+    subOsc.connect(subGain);
+    subGain.connect(this.masterGain);
+
+    subOsc.start(t);
+    subOsc.stop(t + 1.65);
+  }
+
   playCrowWhooshSFX() {}
   playTitleImpactSFX() {}
 }

@@ -1,22 +1,29 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { Volume2, VolumeX, RotateCcw, Play, Sparkles, Shield } from 'lucide-react';
+import { Volume2, VolumeX, RotateCcw, Play, Sparkles } from 'lucide-react';
 import CrowVortexCanvas from './CrowVortexCanvas';
 import EyeTransformation from './EyeTransformation';
 import { audioEngine } from '../utils/audioEngine';
 
 export default function CinematicIntro({ onComplete }) {
   const [hasStarted, setHasStarted] = useState(false);
-  const [scenePhase, setScenePhase] = useState(1); // 1 to 7
+  const [scenePhase, setScenePhase] = useState(1); // 1 to 6
   const [progress, setProgress] = useState(0); // 0.0 to 1.0 overall progress
   const [isMuted, setIsMuted] = useState(false);
-  const [showEyeCloseUp, setShowEyeCloseUp] = useState(false);
-  const [bodyDisintegrating, setBodyDisintegrating] = useState(false);
+  const [typedTitle, setTypedTitle] = useState('');
+  const [typedSubtitle, setTypedSubtitle] = useState('');
 
   const containerRef = useRef(null);
   const timelineRef = useRef(null);
 
-  // Initialize GSAP Timeline for the 12-second sequence
+  // Script timing configuration (Total duration: 50 seconds)
+  // Phase 1 (0s-3s): Dark screen (3s)
+  // Phase 2 (3s-8s): Sharingan eyes in dark void (5s)
+  // Phase 3 (8s-18s): Character image fades in with massive red flames (10s)
+  // Phase 4 (18s-30s): Sharingan re-appears + crows fly (12s)
+  // Phase 5 (30s-40s): Sharingan expands massively & explodes into red flames (10s)
+  // Phase 6 (40s-50s): Fiery flame typing animation for IT MANAGER & LEVIATHAN'S DEN (10s)
+
   const startCinematicExperience = () => {
     setHasStarted(true);
     audioEngine.init();
@@ -28,37 +35,23 @@ export default function CinematicIntro({ onComplete }) {
           const currentProg = tl.progress();
           setProgress(currentProg);
 
-          // Update Scene Phases based on elapsed percentage (12 seconds total)
-          if (currentProg < 0.25) {
-            setScenePhase(1); // 0 - 3s
-            setShowEyeCloseUp(false);
-            setBodyDisintegrating(false);
-          } else if (currentProg >= 0.25 && currentProg < 0.42) {
-            setScenePhase(2); // 3 - 5s
-            setShowEyeCloseUp(false);
-            setBodyDisintegrating(false);
-          } else if (currentProg >= 0.42 && currentProg < 0.54) {
-            setScenePhase(3); // 5 - 6.5s
-            setShowEyeCloseUp(true);
-            setBodyDisintegrating(false);
-          } else if (currentProg >= 0.54 && currentProg < 0.75) {
-            setScenePhase(4); // 6.5 - 9.5s
-            setShowEyeCloseUp(false);
-            setBodyDisintegrating(true);
-          } else if (currentProg >= 0.75 && currentProg < 0.83) {
-            setScenePhase(5); // 9 - 10s
-            setShowEyeCloseUp(false);
-            setBodyDisintegrating(true);
-          } else if (currentProg >= 0.83 && currentProg < 0.92) {
-            setScenePhase(6); // 10 - 11s
-            setShowEyeCloseUp(false);
+          // Map 50s timeline progress (0.0 to 1.0) to Script Phases
+          if (currentProg < 0.06) {
+            setScenePhase(1); // 0s - 3s (Dark screen)
+          } else if (currentProg >= 0.06 && currentProg < 0.16) {
+            setScenePhase(2); // 3s - 8s (Sharingan in darkness)
+          } else if (currentProg >= 0.16 && currentProg < 0.36) {
+            setScenePhase(3); // 8s - 18s (Character image + massive red flames)
+          } else if (currentProg >= 0.36 && currentProg < 0.60) {
+            setScenePhase(4); // 18s - 30s (Sharingan + crow flock)
+          } else if (currentProg >= 0.60 && currentProg < 0.80) {
+            setScenePhase(5); // 30s - 40s (Sharingan explosion)
           } else {
-            setScenePhase(7); // 11 - 12s
+            setScenePhase(6); // 40s - 50s (Red flame typing letters)
           }
         }
       },
       onComplete: () => {
-        // Smooth fade transition into Home Page after sequence finishes
         gsap.to(containerRef.current, {
           opacity: 0,
           duration: 1.2,
@@ -72,19 +65,48 @@ export default function CinematicIntro({ onComplete }) {
 
     timelineRef.current = tl;
 
-    // Timeline Cues and Sound FX triggers (Total duration: 12 seconds)
-    tl.to({}, { duration: 3 }) // Scene 1 (0-3s)
-      .call(() => audioEngine.playScene2RisingTension())
-      .to({}, { duration: 2 }) // Scene 2 (3-5s)
+    // GSAP Keyframe Timings (Total: 50 seconds)
+    tl.to({}, { duration: 3 }) // 0-3s (Phase 1)
       .call(() => audioEngine.playEyeActivationSFX())
-      .to({}, { duration: 1.5 }) // Scene 3 (5-6.5s)
+      .to({}, { duration: 5 }) // 3-8s (Phase 2)
+      .to({}, { duration: 10 }) // 8-18s (Phase 3)
       .call(() => audioEngine.playCrowWhooshSFX())
-      .to({}, { duration: 2.5 }) // Scene 4 (6.5-9s)
-      .to({}, { duration: 1 }) // Scene 5 (9-10s)
-      .call(() => audioEngine.playTitleImpactSFX())
-      .to({}, { duration: 1 }) // Scene 6 (10-11s)
-      .to({}, { duration: 1.0 }); // Scene 7 (11-12s)
+      .to({}, { duration: 12 }) // 18-30s (Phase 4)
+      .call(() => audioEngine.playSharinganExplosionSFX())
+      .to({}, { duration: 10 }) // 30-40s (Phase 5)
+      .to({}, { duration: 10 }); // 40-50s (Phase 6)
   };
+
+  // Phase 6 Fiery Flame Typing Letter Animation Trigger (40s to 50s)
+  useEffect(() => {
+    if (scenePhase === 6) {
+      const titleText = "IT MANAGER";
+      const subText = "WELCOME TO LEVIATHAN'S DEN";
+      let charIdx = 0;
+      let subIdx = 0;
+
+      const titleInterval = setInterval(() => {
+        if (charIdx <= titleText.length) {
+          setTypedTitle(titleText.slice(0, charIdx));
+          charIdx++;
+        } else {
+          clearInterval(titleInterval);
+          const subInterval = setInterval(() => {
+            if (subIdx <= subText.length) {
+              setTypedSubtitle(subText.slice(0, subIdx));
+              subIdx++;
+            } else {
+              clearInterval(subInterval);
+            }
+          }, 70);
+        }
+      }, 120);
+
+      return () => {
+        clearInterval(titleInterval);
+      };
+    }
+  }, [scenePhase]);
 
   const handleToggleSound = () => {
     const muted = audioEngine.toggleMute();
@@ -93,6 +115,8 @@ export default function CinematicIntro({ onComplete }) {
 
   const handleReplay = () => {
     if (timelineRef.current) {
+      setTypedTitle('');
+      setTypedSubtitle('');
       timelineRef.current.restart();
       gsap.to(containerRef.current, { opacity: 1, duration: 0.3 });
     } else {
@@ -105,7 +129,7 @@ export default function CinematicIntro({ onComplete }) {
       ref={containerRef}
       className="fixed inset-0 z-50 bg-black text-white overflow-hidden flex items-center justify-center select-none"
     >
-      {/* 3D WebGL Crow & Particle Atmosphere Overlay */}
+      {/* 3D WebGL Crow & Red Flame Particle Atmosphere Overlay */}
       <CrowVortexCanvas scenePhase={scenePhase} progress={progress} />
 
       {/* Control Toolbar (Sound ON/OFF & Replay) */}
@@ -122,7 +146,7 @@ export default function CinematicIntro({ onComplete }) {
           <button
             onClick={handleReplay}
             className="p-3 rounded-full bg-stone-900/80 border border-stone-700/60 text-stone-300 hover:text-white hover:border-crimson-500 hover:bg-crimson-950/60 transition-all backdrop-blur"
-            title="Replay Cinematic Sequence"
+            title="Replay 50s Sequence"
           >
             <RotateCcw className="w-5 h-5" />
           </button>
@@ -147,7 +171,7 @@ export default function CinematicIntro({ onComplete }) {
             </div>
 
             <p className="text-xs text-stone-400 font-light leading-relaxed">
-              Experience the cinematic opening sequence for the IT Manager Championship.
+              Experience the 50-second cinematic opening sequence for the IT Manager Championship.
             </p>
 
             <button
@@ -155,40 +179,42 @@ export default function CinematicIntro({ onComplete }) {
               className="w-full py-4 rounded-xl bg-gradient-to-r from-crimson-700 via-crimson-600 to-red-700 text-white font-extrabold text-sm uppercase tracking-widest shadow-[0_0_30px_rgba(220,38,38,0.6)] hover:brightness-125 transition-all flex items-center justify-center space-x-2"
             >
               <Play className="w-4 h-4 fill-white" />
-              <span>ENTER THE DEN</span>
+              <span>ENTER THE DEN (50S INTRO)</span>
             </button>
           </div>
         </div>
       )}
 
-      {/* SCENE 1 & 2: CHARACTER & STONE THRONE STAGE */}
-      {hasStarted && !showEyeCloseUp && (
-        <div 
-          className={`relative w-full h-full flex items-center justify-center transition-opacity duration-700 ${
-            bodyDisintegrating ? 'opacity-0 scale-95 blur-sm transition-all duration-1000' : 'opacity-100'
-          }`}
-        >
-          {/* Stone Throne & Background Image */}
-          <div 
-            className="relative w-full max-w-4xl h-[90vh] flex items-center justify-center transition-transform duration-100 ease-out overflow-hidden rounded-3xl"
-            style={{
-              transform: scenePhase === 1 
-                ? `scale(${1 + progress * 0.3})` 
-                : scenePhase === 2 
-                ? `scale(1.08) translateY(${- (progress - 0.25) * 60}px)`
-                : `scale(1.15)`
-            }}
-          >
-            {/* Throne Wall Background Image */}
+      {/* PHASE 1: DARK SCREEN (0s - 3s) */}
+      {hasStarted && scenePhase === 1 && (
+        <div className="absolute inset-0 z-50 bg-black flex items-center justify-center">
+          <div className="w-3 h-3 rounded-full bg-crimson-600 animate-ping opacity-75" />
+        </div>
+      )}
+
+      {/* PHASE 2, 4, 5: SHARINGAN TRANSFORMATION OVERLAYS */}
+      {hasStarted && (
+        <EyeTransformation active={scenePhase === 2 || scenePhase === 4 || scenePhase === 5} progress={progress} phase={scenePhase} />
+      )}
+
+      {/* PHASE 3 & 4: CHARACTER IMAGE APPEARS WITH MASSIVE RED FLAMES (8s - 30s) */}
+      {hasStarted && (scenePhase === 3 || scenePhase === 4) && (
+        <div className="relative w-full h-full flex items-center justify-center animate-in fade-in duration-1000">
+          <div className="relative w-full max-w-4xl h-[90vh] flex items-center justify-center overflow-hidden rounded-3xl">
             <img 
               src="/assets/character.jpg" 
               alt="Leviathan Throne Character"
-              className={`w-full h-full object-cover object-center filter contrast-105 brightness-95 transition-all duration-700 ${
-                scenePhase === 2 ? 'translate-y-[-10px]' : ''
-              }`}
+              className="w-full h-full object-cover object-center filter contrast-110 brightness-95"
             />
-
-            {/* Custom Leviathan Crimson Emblem Overlay on Bottom Right */}
+            {/* Massive Red Flame Rim Glow */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/80 opacity-70" />
+            <div 
+              className="absolute inset-0 mix-blend-soft-light animate-pulse pointer-events-none"
+              style={{
+                background: 'radial-gradient(circle at 50% 50%, rgba(220, 38, 38, 0.6) 0%, transparent 70%)'
+              }}
+            />
+            {/* Leviathan Emblem */}
             <div className="absolute bottom-6 right-6 z-30 p-2.5 rounded-xl bg-black/90 border border-crimson-800/80 flex items-center space-x-2 backdrop-blur shadow-[0_0_20px_rgba(220,38,38,0.5)]">
               <div className="w-6 h-6 rounded-lg bg-crimson-950 border border-crimson-600 flex items-center justify-center font-display font-black text-crimson-500 text-xs">
                 L
@@ -197,29 +223,14 @@ export default function CinematicIntro({ onComplete }) {
                 LEVIATHAN
               </span>
             </div>
-
-            {/* Ambient Dark Fog Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/80 opacity-70" />
-            <div 
-              className="absolute inset-0 transition-opacity duration-1000 pointer-events-none mix-blend-soft-light"
-              style={{
-                background: 'radial-gradient(circle at 50% 50%, rgba(220, 38, 38, 0.4) 0%, transparent 70%)'
-              }}
-            />
           </div>
         </div>
       )}
 
-      {/* SCENE 3: DRAMATIC EYE TRANSFORMATION */}
-      {hasStarted && (
-        <EyeTransformation active={showEyeCloseUp} progress={progress} />
-      )}
-
-      {/* SCENE 6 & 7: METALLIC 3D TITLE */}
-      {hasStarted && (scenePhase === 6 || scenePhase === 7) && (
-        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center text-center p-4">
-          
-          <div className="relative animate-in fade-in zoom-in-90 duration-700">
+      {/* PHASE 6: RED FLAME TYPING LETTER ANIMATION (40s - 50s) */}
+      {hasStarted && scenePhase === 6 && (
+        <div className="absolute inset-0 z-50 flex flex-col items-center justify-center text-center p-4 bg-black/90 backdrop-blur-sm">
+          <div className="relative">
             <h1 
               className="font-display font-black text-6xl sm:text-8xl md:text-9xl tracking-tight uppercase text-transparent bg-clip-text bg-gradient-to-b from-red-500 via-crimson-600 to-red-950 drop-shadow-[0_10px_20px_rgba(0,0,0,0.9)]"
               style={{
@@ -227,17 +238,18 @@ export default function CinematicIntro({ onComplete }) {
                 filter: 'drop-shadow(0 0 25px rgba(220, 38, 38, 0.7))'
               }}
             >
-              IT MANAGER
+              {typedTitle}
+              <span className="animate-pulse text-crimson-500">|</span>
             </h1>
-            <div className="absolute -inset-4 bg-crimson-600/20 blur-3xl -z-10 rounded-full animate-pulse" />
+            <div className="absolute -inset-6 bg-crimson-600/30 blur-3xl -z-10 rounded-full animate-pulse" />
           </div>
 
-          {scenePhase === 7 && (
-            <div className="mt-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
-              <span className="font-cinematic font-bold text-lg sm:text-2xl md:text-3xl text-stone-300 tracking-[0.3em] uppercase block drop-shadow-[0_0_15px_#dc2626]">
-                WELCOME TO LEVIATHAN'S DEN
+          {typedSubtitle && (
+            <div className="mt-8 animate-in fade-in duration-500">
+              <span className="font-cinematic font-bold text-lg sm:text-2xl md:text-3xl text-stone-200 tracking-[0.3em] uppercase block drop-shadow-[0_0_20px_#dc2626]">
+                {typedSubtitle}
               </span>
-              <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-crimson-600 to-transparent mx-auto mt-4" />
+              <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-crimson-600 to-transparent mx-auto mt-4" />
             </div>
           )}
         </div>
