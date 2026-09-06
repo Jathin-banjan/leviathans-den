@@ -41,10 +41,10 @@ export default function CinematicIntro({ onComplete }) {
 
           // 5 Script Steps mapped across 50 seconds
           if (currentProg < 0.20) {
-            setSceneStep(1); // 0s – 10s: Sharingan rolling in darkness
+            setSceneStep(1); // 0s – 10s: Two Sharingan eyes rolling in dark void
           } else if (currentProg >= 0.20 && currentProg < 0.44) {
-            setSceneStep(2); // 10s – 22s: Character reveal -> fade out & vanish
-          } else if (currentProg >= 0.20 && currentProg < 0.68) {
+            setSceneStep(2); // 10s – 22s: Full picture reveal of character face & throne -> fade out
+          } else if (currentProg >= 0.44 && currentProg < 0.68) {
             setSceneStep(3); // 22s – 34s: Big Sharingan rolling & expanding to full screen -> red flames
           } else {
             setSceneStep(4); // 34s – 50s: Fiery flame letter typing for IT MANAGER & WELCOME TO LEVIATHAN DEN
@@ -121,17 +121,17 @@ export default function CinematicIntro({ onComplete }) {
     }
   };
 
-  // Step 2 Character reveal opacity (10s-22s)
+  // Step 2 Full Picture Character & Face Reveal opacity (10s-22s)
   const getCharacterOpacityStyle = () => {
     if (sceneStep !== 2) return { opacity: 0 };
     // 10s to 22s (progress 0.20 to 0.44)
-    // 10s-16s: Fade in; 16s-22s: Fade out and vanish
+    // 10s-17s: Full reveal; 17s-22s: Fade out and vanish
     const norm = (progress - 0.20) / 0.24;
     let opacity = 0;
-    if (norm < 0.5) {
-      opacity = norm * 2; // Fade in
+    if (norm < 0.6) {
+      opacity = norm * 1.66; // Smooth reveal to full opacity
     } else {
-      opacity = (1 - norm) * 2; // Fade out & vanish
+      opacity = (1 - norm) * 2.5; // Smooth vanish back to darkness
     }
     return { opacity: Math.max(0, Math.min(1, opacity)) };
   };
@@ -197,12 +197,12 @@ export default function CinematicIntro({ onComplete }) {
         </div>
       )}
 
-      {/* STEP 1 & STEP 3: SHARINGAN OVERLAYS */}
+      {/* STEP 1 & STEP 3: SHARINGAN OVERLAYS (Two Sharingan in Step 1) */}
       {hasStarted && (
         <EyeTransformation active={sceneStep === 1 || sceneStep === 3} progress={progress} phase={sceneStep} />
       )}
 
-      {/* STEP 2 (10s – 22s): CHARACTER IMAGE APPEARS REVEALING LOOK THEN FADES & VANISHES */}
+      {/* STEP 2 (10s – 22s): FULL PICTURE CHARACTER & FACE REVEAL THEN FADES & VANISHES */}
       {hasStarted && sceneStep === 2 && (
         <div 
           className="relative w-full h-full flex items-center justify-center transition-opacity duration-300"

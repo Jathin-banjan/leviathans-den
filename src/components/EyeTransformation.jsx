@@ -5,20 +5,24 @@ export default function EyeTransformation({ active, progress, phase }) {
 
   const SHARINGAN_IMG = "/assets/sharingan_reference.png";
 
-  // Step 1 (0s - 10s): Normal-speed rolling Sharingan in dark black screen
+  // Step 1 (0s - 10s): TWO Sharingan eyes displayed side-by-side rolling in dark void
   if (phase === 1) {
     const norm = Math.max(0, Math.min(1, progress / 0.20)); // 0s - 10s progress
     const rotation = norm * 360 * 3; // Rolling at normal speed
     return (
       <div className="absolute inset-0 z-30 pointer-events-none flex items-center justify-center bg-black">
-        <div className="relative w-32 h-32 sm:w-44 sm:h-44 rounded-full flex items-center justify-center shadow-[0_0_60px_#dc2626] animate-in fade-in duration-1000">
-          <div className="absolute -inset-4 rounded-full bg-crimson-600/30 blur-md animate-pulse" />
-          <img 
-            src={SHARINGAN_IMG}
-            alt="Rolling Sharingan"
-            className="w-full h-full object-contain rounded-full filter contrast-125 brightness-110 drop-shadow-[0_0_20px_rgba(220,38,38,0.9)]"
-            style={{ transform: `rotate(${rotation}deg)` }}
-          />
+        <div className="flex items-center space-x-12 sm:space-x-20 scale-125 sm:scale-150 transition-all duration-700">
+          {[0, 1].map((idx) => (
+            <div key={idx} className="relative w-20 h-20 sm:w-28 sm:h-28 rounded-full flex items-center justify-center shadow-[0_0_50px_#dc2626]">
+              <div className="absolute -inset-3 rounded-full bg-crimson-600/30 blur-md animate-pulse" />
+              <img 
+                src={SHARINGAN_IMG}
+                alt={`Sharingan Eye ${idx + 1}`}
+                className="w-full h-full object-contain rounded-full filter contrast-125 brightness-110 drop-shadow-[0_0_15px_rgba(220,38,38,0.9)]"
+                style={{ transform: `rotate(${rotation}deg)` }}
+              />
+            </div>
+          ))}
         </div>
       </div>
     );
