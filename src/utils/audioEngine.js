@@ -1,6 +1,8 @@
-// Web Audio & Looping Akatsuki Theme Music Engine
+// Web Audio & YouTube Track Engine (0:57 to 1:41 Looping)
 
-const INTRO_MUSIC_PATH = "/audio/akatsuki-theme.mp3";
+const INTRO_MUSIC_PATH = "/audio/akatsuki-theme.webm";
+const LOOP_START_TIME = 57.0; // 0:57
+const LOOP_END_TIME = 101.0;  // 1:41
 
 class SoundEngine {
   constructor() {
@@ -18,14 +20,22 @@ class SoundEngine {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
       this.ctx = new AudioCtx();
       this.masterGain = this.ctx.createGain();
-      this.masterGain.gain.setValueAtTime(0.75, this.ctx.currentTime);
+      this.masterGain.gain.setValueAtTime(0.8, this.ctx.currentTime);
       this.masterGain.connect(this.ctx.destination);
 
-      // Akatsuki Theme Looping MP3 Audio Element
+      // YouTube Audio Track Element (0:57 to 1:41 Looping)
       this.audioElement = new Audio();
       this.audioElement.src = INTRO_MUSIC_PATH;
-      this.audioElement.loop = true;
-      this.audioElement.volume = 0.7;
+      this.audioElement.loop = false; // Custom loop boundary listener
+      this.audioElement.volume = 0.8;
+
+      // Real-time timeupdate listener for precise 0:57 to 1:41 looping
+      this.audioElement.addEventListener("timeupdate", () => {
+        if (!this.audioElement) return;
+        if (this.audioElement.currentTime >= LOOP_END_TIME || this.audioElement.currentTime < LOOP_START_TIME - 0.5) {
+          this.audioElement.currentTime = LOOP_START_TIME;
+        }
+      });
 
       this.initialized = true;
     } catch (e) {
@@ -43,9 +53,9 @@ class SoundEngine {
     this.init();
     this.resume();
     if (this.audioElement && !this.isMuted) {
-      this.audioElement.currentTime = 0;
+      this.audioElement.currentTime = LOOP_START_TIME;
       this.audioElement.play().catch(() => {
-        // Fallback to Akatsuki Synthetic Looper if MP3 is pending
+        // Fallback to Akatsuki Synthetic Looper if MP3/WebM auto-play is blocked
         this.startAkatsukiSynthLoop();
       });
     } else {
@@ -56,7 +66,7 @@ class SoundEngine {
   stopIntroTrack() {
     if (this.audioElement) {
       this.audioElement.pause();
-      this.audioElement.currentTime = 0;
+      this.audioElement.currentTime = LOOP_START_TIME;
     }
     this.stopAkatsukiSynthLoop();
   }
@@ -64,7 +74,7 @@ class SoundEngine {
   setMute(muted) {
     this.isMuted = muted;
     if (this.masterGain && this.ctx) {
-      this.masterGain.gain.setValueAtTime(muted ? 0 : 0.75, this.ctx.currentTime);
+      this.masterGain.gain.setValueAtTime(muted ? 0 : 0.8, this.ctx.currentTime);
     }
     if (this.audioElement) {
       this.audioElement.muted = muted;
@@ -76,7 +86,7 @@ class SoundEngine {
     return this.isMuted;
   }
 
-  // Akatsuki Theme Looper Synthesizer (Ominous Choir + Gong Pulse + Bass Drone)
+  // Akatsuki Theme Looper Synthesizer Fallback
   startAkatsukiSynthLoop() {
     if (!this.ctx || this.synthLoopInterval || this.isMuted) return;
     this.resume();
@@ -85,7 +95,6 @@ class SoundEngine {
       if (this.isMuted || !this.ctx) return;
       const t = this.ctx.currentTime;
 
-      // Dark Minor Chord Drone (A Minor / C Ominous Choir)
       [110, 130.81, 164.81, 220].forEach((freq) => {
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
@@ -104,7 +113,6 @@ class SoundEngine {
         osc.stop(t + 4.0);
       });
 
-      // Japanese Taiko/Gong Sub Pulse
       const kickOsc = this.ctx.createOscillator();
       const kickGain = this.ctx.createGain();
       kickOsc.type = 'sine';
@@ -132,7 +140,7 @@ class SoundEngine {
     }
   }
 
-  // Cinematic SFX Triggers
+  // SFX Triggers
   playScene1Rumble() { this.playIntroTrack(); }
   playScene2RisingTension() {}
   playEyeActivationSFX() {
