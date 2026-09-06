@@ -2,10 +2,10 @@ import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-// Custom 3D Crow Instanced Mesh Component
-function CrowFlock({ scenePhase, progress }) {
+// 3D Realistic Black Crows Component
+function CrowFlock({ progress }) {
   const meshRef = useRef();
-  const count = 350;
+  const count = 280;
 
   const crowGeometry = useMemo(() => {
     const geom = new THREE.BufferGeometry();
@@ -23,21 +23,17 @@ function CrowFlock({ scenePhase, progress }) {
     const temp = [];
     for (let i = 0; i < count; i++) {
       temp.push({
-        spawnX: (Math.random() - 0.5) * 1.5,
-        spawnY: -0.2 + (Math.random() - 0.5) * 1.8,
-        spawnZ: (Math.random() - 0.5) * 0.8,
-        vx: (Math.random() - 0.5) * 4,
-        vy: 1.0 + Math.random() * 3,
-        vz: (Math.random() - 0.5) * 4,
-        vortexRadius: 0.8 + Math.random() * 3.5,
+        spawnX: (Math.random() - 0.5) * 12,
+        spawnY: -2 + (Math.random() - 0.5) * 8,
+        spawnZ: (Math.random() - 0.5) * 6,
+        vx: (Math.random() - 0.5) * 5,
+        vy: 1.5 + Math.random() * 3,
+        vz: (Math.random() - 0.5) * 5,
+        vortexRadius: 1.0 + Math.random() * 4.0,
         vortexAngle: Math.random() * Math.PI * 2,
         vortexSpeed: (Math.random() > 0.5 ? 1 : -1) * (1.5 + Math.random() * 2.5),
-        vortexY: (Math.random() - 0.5) * 3,
-        targetX: (Math.random() - 0.5) * 16,
-        targetY: (Math.random() - 0.5) * 10,
-        targetZ: -2 - Math.random() * 10,
         scale: 0.15 + Math.random() * 0.25,
-        flapSpeed: 10 + Math.random() * 20,
+        flapSpeed: 12 + Math.random() * 18,
         flapOffset: Math.random() * Math.PI * 2
       });
     }
@@ -55,32 +51,25 @@ function CrowFlock({ scenePhase, progress }) {
       let rotX = 0, rotY = 0, rotZ = 0;
       let scale = p.scale;
 
-      if (progress < 0.36) {
-        x = p.spawnX + Math.sin(time + i) * 0.05;
-        y = p.spawnY + Math.cos(time * 0.8 + i) * 0.05;
-        z = p.spawnZ + Math.sin(time * 0.5) * 0.05;
-        scale = p.scale * 0.2 * (progress / 0.36);
-      } else if (progress >= 0.36 && progress < 0.60) {
-        const pNorm = (progress - 0.36) / 0.24;
+      // Crows fly during Phase 6 (30s - 37s, progress 0.60 to 0.74) and Phase 8 (43s - 47s, progress 0.86 to 0.94)
+      const isCrowPhase = (progress >= 0.60 && progress < 0.74) || (progress >= 0.86 && progress < 0.94);
+
+      if (isCrowPhase) {
+        const pNorm = (progress - 0.60) / 0.34;
         const currentAngle = p.vortexAngle + time * p.vortexSpeed;
-        const currentRadius = THREE.MathUtils.lerp(p.vortexRadius * 2, p.vortexRadius * 0.6, pNorm);
+        const currentRadius = THREE.MathUtils.lerp(p.vortexRadius * 2, p.vortexRadius * 0.8, pNorm);
 
         x = Math.cos(currentAngle) * currentRadius;
-        y = p.vortexY * (1 - pNorm * 0.5) + Math.sin(time * 3 + i) * 0.2;
+        y = p.spawnY + Math.sin(time * 2 + i) * 0.3;
         z = Math.sin(currentAngle) * currentRadius + 1.0;
 
         rotY = -currentAngle + Math.PI / 2;
-        rotZ = 0.4;
+        rotZ = 0.3;
       } else {
-        const pNorm = (progress - 0.60) / 0.40;
-        const angle = p.vortexAngle + time * p.vortexSpeed * 0.5;
-        const radius = p.vortexRadius * (1 + pNorm * 3);
-
-        x = Math.cos(angle) * radius;
-        y = p.vortexY + (p.targetY - p.vortexY) * pNorm;
-        z = Math.sin(angle) * radius - pNorm * 5;
-
-        rotY = -angle;
+        x = p.spawnX + Math.sin(time + i) * 0.05;
+        y = -10; // Hide off-screen
+        z = -50;
+        scale = 0.001;
       }
 
       const wingFlap = Math.sin(time * p.flapSpeed + p.flapOffset) * 0.4;
@@ -99,7 +88,7 @@ function CrowFlock({ scenePhase, progress }) {
   return (
     <instancedMesh ref={meshRef} args={[crowGeometry, null, count]}>
       <meshStandardMaterial 
-        color="#0a0a0c" 
+        color="#08080a" 
         roughness={0.8}
         metalness={0.2}
         side={THREE.DoubleSide}
@@ -108,9 +97,9 @@ function CrowFlock({ scenePhase, progress }) {
   );
 }
 
-// 3D Realistic Red Flame Embers & Electric Chakra Particles
+// Realistic Red Flame Embers & Floating Ash
 function AtmosphereEmbers() {
-  const count = 300;
+  const count = 250;
   const meshRef = useRef();
 
   const particles = useMemo(() => {
@@ -149,7 +138,7 @@ function AtmosphereEmbers() {
         size={0.08}
         color="#ef4444"
         transparent
-        opacity={0.8}
+        opacity={0.75}
         blending={THREE.AdditiveBlending}
       />
     </points>
@@ -158,12 +147,12 @@ function AtmosphereEmbers() {
 
 function CameraRig({ progress }) {
   useFrame(({ camera }) => {
-    if (progress < 0.36) {
-      const norm = progress / 0.36;
+    if (progress < 0.50) {
+      const norm = progress / 0.50;
       camera.position.z = THREE.MathUtils.lerp(5.5, 4.0, norm);
-    } else if (progress >= 0.36 && progress < 0.60) {
-      const norm = (progress - 0.36) / 0.24;
-      camera.position.z = THREE.MathUtils.lerp(4.0, 2.0, norm);
+    } else if (progress >= 0.50 && progress < 0.86) {
+      const norm = (progress - 0.50) / 0.36;
+      camera.position.z = THREE.MathUtils.lerp(4.0, 3.2, norm);
     } else {
       camera.position.z = 5.0;
     }
@@ -183,7 +172,7 @@ export default function CrowVortexCanvas({ scenePhase, progress }) {
         <pointLight position={[2, 3, 4]} color="#ef4444" intensity={3.0} />
         <pointLight position={[-2, -1, 2]} color="#991b1b" intensity={2.0} />
         
-        <CrowFlock scenePhase={scenePhase} progress={progress} />
+        <CrowFlock progress={progress} />
         <AtmosphereEmbers />
         <CameraRig progress={progress} />
       </Canvas>
